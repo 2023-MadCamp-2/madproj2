@@ -16,23 +16,41 @@ const BottomNav = ({ state, navigation }) => {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={() => handlePress(0)}>
-        <MaterialCommunityIcons name="account-box" size={32} />
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => handlePress(1)}>
-        <MaterialCommunityIcons name="chat-processing-outline" size={32} />
-      </TouchableOpacity>
-      <View style={styles.addButton}>
-        <TouchableOpacity onPress={() => handlePress(2)}>
-          <MaterialCommunityIcons name="microphone" size={40} color="#fff" />
+      <View style={styles.tabContainer}>
+        <TouchableOpacity onPress={() => handlePress(0)}>
+          <View style={state.index === 0 ? styles.activeTab : null}>
+            <MaterialCommunityIcons name="account-box" size={32} />
+          </View>
         </TouchableOpacity>
       </View>
-      <TouchableOpacity onPress={() => handlePress(3)}>
-        <MaterialCommunityIcons name="book-alphabet" size={32} />
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => handlePress(4)}>
-        <MaterialCommunityIcons name="account" size={32} />
-      </TouchableOpacity>
+      <View style={styles.tabContainer}>
+        <TouchableOpacity onPress={() => handlePress(1)}>
+          <View style={state.index === 1 ? styles.activeTab : null}>
+            <MaterialCommunityIcons name="chat-processing-outline" size={32} />
+          </View>
+        </TouchableOpacity>
+      </View>
+      <View style={styles.addButtonContainer}>
+        <View style={styles.addButton}>
+          <TouchableOpacity onPress={() => handlePress(2)}>
+            <MaterialCommunityIcons name="microphone" size={40} color="#fff" />
+          </TouchableOpacity>
+        </View>
+      </View>
+      <View style={styles.tabContainer}>
+        <TouchableOpacity onPress={() => handlePress(3)}>
+          <View style={state.index === 3 ? styles.activeTab : null}>
+            <MaterialCommunityIcons name="book-alphabet" size={32} />
+          </View>
+        </TouchableOpacity>
+      </View>
+      <View style={styles.tabContainer}>
+        <TouchableOpacity onPress={() => handlePress(4)}>
+          <View style={state.index === 4 ? styles.activeTab : null}>
+            <MaterialCommunityIcons name="account" size={32} />
+          </View>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -54,6 +72,16 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     zIndex: 10,
   },
+  tabContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  addButtonContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   addButton: {
     backgroundColor: '#000',
     width: 55,
@@ -62,6 +90,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 40,
+  },
+  activeTab: {
+    backgroundColor: '#a3f7ad',
+    borderRadius: 20,
+    padding: 5,
   },
 });
 
