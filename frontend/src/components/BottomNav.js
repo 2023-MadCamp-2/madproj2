@@ -71,6 +71,14 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     marginHorizontal: 10,
     zIndex: 10,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: .3,
+    shadowRadius: 3,
+    elevation: 5,
   },
   tabContainer: {
     flex: 1,
@@ -90,6 +98,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 40,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: .3,
+    shadowRadius: 3,
+    elevation: 5,
   },
   activeTab: {
     backgroundColor: '#a3f7ad',

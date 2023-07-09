@@ -269,6 +269,15 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     borderRadius: 10,
     marginBottom: 10,
+
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 5,
+    },
+    shadowOpacity: .2,
+    shadowRadius: 3,
+    elevation: 3,
   },
   word: {
     fontSize: 20,

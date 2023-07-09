@@ -5,6 +5,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomePage from '../pages/HomePage'; // 삐삐
 import LoginPage from '../pages/Auth/LoginPage'; 
 import SignupPage from '../pages/Auth/SignupPage';
+import HistoryRoomPage from "../pages/History/HistoryRoomPage";
 
 import ContactPage from '../pages/Contact/ContactListPage';
 import HistoryListPage from '../pages/History/HistoryListPage';
@@ -32,8 +33,8 @@ function MyTabs() {
     >
       <Tab.Screen name="Contact" component={ContactPage} />
       <Tab.Screen name="History" component={HistoryListPage} />
-      {/* <Tab.Screen name="Send" component={SendPage} /> */}
-      <Tab.Screen name="Home" component={HomePage} />
+      <Tab.Screen name="Send" component={SendPage} />
+      {/* <Tab.Screen name="Home" component={HomePage} /> */}
       <Tab.Screen name="Dictionary" component={DictionaryPage} />
       <Tab.Screen name="MyPage" component={MyPage} />
     </Tab.Navigator>
@@ -49,6 +50,7 @@ const Navigation = () => {
         <Stack.Screen name="Main" component={MyTabs} />
         <Stack.Screen name="Login" component={LoginPage} />
         <Stack.Screen name="Signup" component={SignupPage} />
+        <Stack.Screen name="HistoryRoom" component={HistoryRoomPage} />
       </Stack.Navigator>
     </NavigationContainer>
   );

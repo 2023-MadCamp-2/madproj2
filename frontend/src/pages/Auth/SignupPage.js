@@ -1,10 +1,12 @@
 import React from 'react';
 import { View, StyleSheet, Text, TextInput, TouchableOpacity } from 'react-native';
 import { useFonts, BlackHanSans_400Regular } from '@expo-google-fonts/black-han-sans';
+import { DoHyeon_400Regular } from '@expo-google-fonts/do-hyeon';
 
 const SignupPage = ({ navigation }) => {
     const [fontsLoaded] = useFonts({
         'BlackHanSans': BlackHanSans_400Regular,
+        'DoHyeon': DoHyeon_400Regular,
     });
 
     const [name, setName] = React.useState('');
@@ -37,7 +39,7 @@ const SignupPage = ({ navigation }) => {
                         returnKeyType="done"
                     />
                     <TouchableOpacity style={styles.checkButton}>
-                        <Text style={{color: 'white'}}>중복확인</Text>
+                        <Text style={{color: 'white', fontFamily: 'DoHyeon',}}>중복확인</Text>
                     </TouchableOpacity>
                 </View>
                 <TextInput
@@ -114,7 +116,8 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
         textAlign: 'center',
         borderRadius: 10,
-        borderWidth: 1
+        borderWidth: 1,
+        fontFamily: 'DoHyeon',
     },
 
 })

@@ -2,11 +2,12 @@ import React from 'react';
 import { useEffect, useState, useContext } from 'react';
 import { View, StyleSheet, Text, TextInput,TouchableOpacity } from 'react-native';
 import { useFonts, BlackHanSans_400Regular } from '@expo-google-fonts/black-han-sans';
-
+import { DoHyeon_400Regular } from '@expo-google-fonts/do-hyeon';
 const LoginPage = ({ navigation }) => { 
 
   const [fontsLoaded] = useFonts({
     'BlackHanSans': BlackHanSans_400Regular,
+    'DoHyeon': DoHyeon_400Regular,
   });
 
   const [username, setUsername] = useState("");
@@ -88,7 +89,8 @@ const styles = StyleSheet.create({
       paddingVertical: 10,
       textAlign: 'center',
       borderRadius: 10,
-      borderWidth:1
+      borderWidth:1,
+      fontFamily: 'DoHyeon',
   },
   
 })
