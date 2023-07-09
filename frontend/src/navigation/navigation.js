@@ -47,9 +47,9 @@ const Navigation = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="Main" component={MyTabs} />
         <Stack.Screen name="Login" component={LoginPage} />
         <Stack.Screen name="Signup" component={SignupPage} />
+        <Stack.Screen name="Main" component={MyTabs} />
         <Stack.Screen name="HistoryRoom" component={HistoryRoomPage} />
       </Stack.Navigator>
     </NavigationContainer>

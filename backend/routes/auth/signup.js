@@ -32,7 +32,7 @@ router.post('/signup', async (req, res) => {
     // 사용자 생성
     const newUser = { name, nickname, password };
     await client.db().collection('users').insertOne(newUser);
-    res.status(201).json({ message: 'User created successfully' });
+    res.status(201).json({ message: 'Signup Success' });
   } catch (error) {
     console.error('Signup 에러:', error);
     res.status(500).json({ message: 'Error occurred during signup' });

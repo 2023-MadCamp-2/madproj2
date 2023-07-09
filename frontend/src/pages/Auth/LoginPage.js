@@ -10,12 +10,45 @@ const LoginPage = ({ navigation }) => {
     'DoHyeon': DoHyeon_400Regular,
   });
 
-  const [username, setUsername] = useState("");
+  const [nickname, setNickname] = useState("");
   const [password, setPassword] = useState("");
 
-  const onChangeId = (payload) => setUsername(payload);
+  const onChangeId = (payload) => setNickname(payload);
   const onChangePW = (payload) => setPassword(payload);
   
+  const handleLogin = async () => {
+    try {
+      // 로그인 요청을 보낼 데이터 생성
+      const userData = {
+        nickname,
+        password,
+      };
+
+      // 로그인 API 호출
+      const response = await fetch(`http://172.10.5.132:443/auth/login`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userData),
+      });
+
+      if (response.ok) {
+        // 로그인 성공 시 처리할 로직 작성
+        console.log('로그인 성공');
+        // 로그인 성공 후 다음 화면으로 이동
+        navigation.navigate('Send'); // 예시로 홈 화면으로 이동하도록 설정
+      } else {
+        // 로그인 실패 시 처리할 로직 작성
+        console.log('로그인 실패');
+        const errorData = await response.json();
+        console.log('에러 메시지:', errorData.message);
+      }
+    } catch (error) {
+      console.error('로그인 요청 에러:', error);
+    }
+  };
+
   if (!fontsLoaded) {
     return null; // 폰트 로딩 중에는 컴포넌트를 렌더링하지 않습니다.
   }
@@ -31,7 +64,7 @@ const LoginPage = ({ navigation }) => {
                   placeholder={"삐삐별명"} 
                   style={styles.input}
                   returnKeyType = "done"
-                  value={username}
+                  value={nickname}
               />
               <TextInput 
                   secureTextEntry
@@ -43,7 +76,7 @@ const LoginPage = ({ navigation }) => {
               />
           </View>
           <View style={styles.button}>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={handleLogin}>
                   <Text style={{...styles.Btn, backgroundColor:'white'}}>로그인</Text>
               </TouchableOpacity>
               <TouchableOpacity onPress={() => {navigation.navigate('Signup')}}>          
