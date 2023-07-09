@@ -25,10 +25,10 @@ const SendPage = ({ navigation }) => {
   };
 
   const handleSendPress = () => {
-    // 삐삐 전송 기능 구현
-    alert('Sent', `Sent pager to ${recipient} with message ${message}`);
-    setRecipient('');
-    setMessage('');
+      // 삐삐 전송 기능 구현
+      alert('Sent', `Sent pager to ${recipient} with message ${message}`);
+      setRecipient('');
+      setMessage('');
   };
 
   if (!fontsLoaded) {
