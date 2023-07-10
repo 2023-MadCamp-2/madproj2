@@ -3,6 +3,7 @@ import { useEffect, useState, useContext } from 'react';
 import { View, StyleSheet, Text, TextInput,TouchableOpacity } from 'react-native';
 import { useFonts, BlackHanSans_400Regular } from '@expo-google-fonts/black-han-sans';
 import { DoHyeon_400Regular } from '@expo-google-fonts/do-hyeon';
+
 const LoginPage = ({ navigation }) => { 
 
   const [fontsLoaded] = useFonts({
@@ -37,7 +38,7 @@ const LoginPage = ({ navigation }) => {
         // 로그인 성공 시 처리할 로직 작성
         console.log('로그인 성공');
         // 로그인 성공 후 다음 화면으로 이동
-        navigation.navigate('Send'); // 예시로 홈 화면으로 이동하도록 설정
+        navigation.navigate('Main', { screen: 'Send' });
       } else {
         // 로그인 실패 시 처리할 로직 작성
         console.log('로그인 실패');
