@@ -33,15 +33,17 @@ app.use('/auth', loginRouter);
 const contactRouter = require('./routes/contact/contact');
 app.use('/contact', contactRouter);
 
-
 // 에러 핸들러 설정
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send('Internal Server Error');
 });
 
+
 // 포트 설정
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
+
+module.exports = app;

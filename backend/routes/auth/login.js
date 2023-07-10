@@ -18,6 +18,8 @@ async function connectMongoDB() {
 
 connectMongoDB();
 
+console.log("API for Login");
+
 // Login 라우트
 router.post('/login', async (req, res) => {
   try {
