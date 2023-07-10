@@ -18,9 +18,13 @@ async function connectMongoDB() {
 
 connectMongoDB();
 
+
+console.log("API for Signup");
+
 // Signup 라우트
 router.post('/signup', async (req, res) => {
   try {
+
     const { name, nickname, password } = req.body;
 
     // nickname 중복 체크
@@ -38,5 +42,7 @@ router.post('/signup', async (req, res) => {
     res.status(500).json({ message: 'Error occurred during signup' });
   }
 });
+
+
 
 module.exports = router;
