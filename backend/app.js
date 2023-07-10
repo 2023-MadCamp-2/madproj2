@@ -24,19 +24,15 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // 라우터 설정
-const signupRouter = require('./routes/auth/signup');
-app.use('/auth', signupRouter);
-
-const loginRouter = require('./routes/auth/login');
-app.use('/auth', loginRouter);
-
-
+const authRouter = require('./routes/auth');
+app.use('/auth', authRouter);
 
 // 에러 핸들러 설정
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send('Internal Server Error');
 });
+
 
 // 포트 설정
 const port = process.env.PORT || 3000;
