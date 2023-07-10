@@ -3,7 +3,10 @@ import { View, StyleSheet, Text, TextInput, TouchableOpacity } from 'react-nativ
 import { useFonts, BlackHanSans_400Regular } from '@expo-google-fonts/black-han-sans';
 import { DoHyeon_400Regular } from '@expo-google-fonts/do-hyeon';
 
+const apiUrl = process.env.API_URL;
+
 const SignupPage = ({ navigation }) => {
+    
     const [fontsLoaded] = useFonts({
         'BlackHanSans': BlackHanSans_400Regular,
         'DoHyeon': DoHyeon_400Regular,
@@ -14,8 +17,41 @@ const SignupPage = ({ navigation }) => {
     const [password, setPassword] = React.useState('');
     const [confirmPassword, setConfirmPassword] = React.useState('');
 
-    const handleSignup = () => {
-        // 회원가입 로직 작성
+    const handleSignup = async () => {
+        try {
+            // 회원가입 요청을 보낼 데이터 생성
+            const userData = {
+                name,
+                nickname,
+                password,
+            };
+        
+            console.log(`${apiUrl}/auth/signup`);
+            // 회원가입 API 호출
+            const response = await fetch(`http://172.10.5.132:443/auth/signup`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(userData),
+            });
+            const resData = await response.json();
+
+            // 회원가입 결과 확인
+            if (response.ok) {
+              // 회원가입 성공 시 처리할 로직 작성
+              console.log('회원가입 성공');
+              // 회원가입 성공 후 다음 화면으로 이동
+              navigation.navigate('Login'); // 예시로 로그인 화면으로 이동하도록 설정
+            } else {
+              // 회원가입 실패 시 처리할 로직 작성
+              console.log('회원가입 실패');
+              console.log('에러 메시지:', resData.message);
+            }
+
+            } catch (error) {
+                console.error('회원가입 요청 에러:', error);
+            }
     };
 
     return (
