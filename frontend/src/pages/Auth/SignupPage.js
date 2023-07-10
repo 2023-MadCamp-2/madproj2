@@ -54,7 +54,7 @@ const SignupPage = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={{ ...styles.title, marginTop: 150 }}>회원가입</Text>
+      <Text style={{ ...styles.title, marginTop:'25%' }}>회원가입</Text>
 
       <View style={styles.form}>
         <TextInput

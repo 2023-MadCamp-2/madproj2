@@ -3,8 +3,16 @@ import { useEffect, useState, useContext } from 'react';
 import { View, StyleSheet, Text, TextInput,TouchableOpacity } from 'react-native';
 import { useFonts, BlackHanSans_400Regular } from '@expo-google-fonts/black-han-sans';
 import { DoHyeon_400Regular } from '@expo-google-fonts/do-hyeon';
+import * as AuthSession from 'expo-auth-session';
 
 const LoginPage = ({ navigation }) => { 
+
+  const redirectUrl = AuthSession.makeRedirectUri({
+    useProxy: true,
+  });
+
+
+  const REST_API_KEY = '171227d6ad0248261b1a42d40dda5b34';
 
   const [fontsLoaded] = useFonts({
     'BlackHanSans': BlackHanSans_400Regular,
@@ -50,13 +58,33 @@ const LoginPage = ({ navigation }) => {
     }
   };
 
+  const handleKakaoLogin = async () => {
+    console.log(redirectUrl);
+
+    const authUrl = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${redirectUrl}&response_type=code`;
+    const result = await AuthSession.startAsync({ authUrl });
+
+    if (result.type === 'success') {
+      // 로그인 성공 시 처리할 로직 작성
+      console.log('카카오 로그인 성공');
+      // 로그인 성공 후 다음 화면으로 이동
+      navigation.navigate('Main', { screen: 'Send' });
+    } else {
+      // 로그인 실패 시 처리할 로직 작성
+      console.log('카카오 로그인 실패');
+    }
+  };
+  
+
+
+
   if (!fontsLoaded) {
     return null; // 폰트 로딩 중에는 컴포넌트를 렌더링하지 않습니다.
   }
 
   return(
       <View style={styles.container}>
-          <Text style={{...styles.title, marginTop: 150}}>응답하라</Text>
+          <Text style={{...styles.title, marginTop: '30%'}}>응답하라</Text>
           <Text style={styles.title}>삐삐</Text>
 
           <View style={styles.form}>
@@ -83,6 +111,9 @@ const LoginPage = ({ navigation }) => {
               <TouchableOpacity onPress={() => {navigation.navigate('Signup')}}>          
                   <Text style={{...styles.Btn, backgroundColor:'black', color:'white'}}>간편 회원가입</Text>
               </TouchableOpacity>
+              <TouchableOpacity onPress={handleKakaoLogin}>
+              <Text style={{ ...styles.Btn, borderWidth: 0, backgroundColor: '#fae100', color: 'black' }}>카카오 로그인</Text>
+            </TouchableOpacity>
           </View>
       </View>
   )
