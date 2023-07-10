@@ -3,6 +3,7 @@ const express = require("express");
 const router = express.Router();
 
 const auth = require("./auth");
+const contact = require("./contact/contact");
 
 router.get("/", (req, res) => {
     res.locals.title = "Node Chat!";
@@ -10,5 +11,6 @@ router.get("/", (req, res) => {
 });
 
 router.use("/auth", auth);
+router.use("/contact", contact);
 
 module.exports = router;
