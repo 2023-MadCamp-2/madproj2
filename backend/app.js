@@ -30,8 +30,17 @@ app.use('/auth', signupRouter);
 const loginRouter = require('./routes/auth/login');
 app.use('/auth', loginRouter);
 
+const checkRouter = require('./routes/auth/checkNickname');
+app.use('/auth', checkRouter);
+
+const findUserRouter = require('./routes/auth/user');
+app.use('/auth', findUserRouter);
+
 const contactRouter = require('./routes/contact/contact');
 app.use('/contact', contactRouter);
+
+const chatRouter = require('./routes/chat/chat');
+app.use('/chat', chatRouter);
 
 // 에러 핸들러 설정
 app.use((err, req, res, next) => {
