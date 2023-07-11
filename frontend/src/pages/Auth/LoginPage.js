@@ -4,6 +4,7 @@ import { View, StyleSheet, Text, TextInput,TouchableOpacity } from 'react-native
 import { useFonts, BlackHanSans_400Regular } from '@expo-google-fonts/black-han-sans';
 import { DoHyeon_400Regular } from '@expo-google-fonts/do-hyeon';
 import * as AuthSession from 'expo-auth-session';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const LoginPage = ({ navigation }) => { 
 
@@ -45,8 +46,11 @@ const LoginPage = ({ navigation }) => {
       if (response.ok) {
         // 로그인 성공 시 처리할 로직 작성
         console.log('로그인 성공');
+
+        AsyncStorage.setItem('myNickname', userData.nickname);
+        
         // 로그인 성공 후 다음 화면으로 이동
-        navigation.navigate('Main', { screen: 'Send' });
+        navigation.navigate('Main', { screen: 'Contact' });
       } else {
         // 로그인 실패 시 처리할 로직 작성
         console.log('로그인 실패');
@@ -68,7 +72,7 @@ const LoginPage = ({ navigation }) => {
       // 로그인 성공 시 처리할 로직 작성
       console.log('카카오 로그인 성공');
       // 로그인 성공 후 다음 화면으로 이동
-      navigation.navigate('Main', { screen: 'Send' });
+      navigation.navigate('Main', { screen: 'Contact' });
     } else {
       // 로그인 실패 시 처리할 로직 작성
       console.log('카카오 로그인 실패');
