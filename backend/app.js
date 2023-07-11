@@ -39,6 +39,8 @@ app.use('/auth', findUserRouter);
 const contactRouter = require('./routes/contact/contact');
 app.use('/contact', contactRouter);
 
+const chatRouter = require('./routes/chat/chat');
+app.use('/chat', chatRouter);
 
 // 에러 핸들러 설정
 app.use((err, req, res, next) => {
