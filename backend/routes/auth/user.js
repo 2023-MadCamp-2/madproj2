@@ -41,5 +41,41 @@ router.get('/user', async (req, res) => {
       res.status(500).json({ message: 'Error occurred while fetching user information' });
     }
 });
+
+// users.js
+// 토큰 저장 라우트
+
+// // 토큰 저장 라우트
+// router.post('/token', async (req, res) => {
+//   try {
+//     const { token, nickname } = req.body;
+//     await client.db().collection('users').updateOne(
+//       { nickname },
+//       { $set: { token } },
+//       { upsert: true }
+//     );
+//     res.status(201).json({ message: 'Token saved' });
+//   } catch (error) {
+//     console.error('Token save 에러:', error);
+//     res.status(500).json({ message: 'Error occurred during token save' });
+//   }
+// });
+// token 엔드포인트
+router.post('/token', async (req, res) => {
+  try {
+    const { token, nickname } = req.body;
+    // 사용자 업데이트
+    const result = await client.db().collection('users').updateOne({ nickname }, { $set: { token } });
+    if (result.modifiedCount !== 1) {
+      throw new Error(`Cannot update token for user: ${nickname}`);
+    }
+
+    res.status(200).json({ message: 'Token updated' });
+  } catch (error) {
+    console.error('Token update 에러:', error);
+    res.status(500).json({ message: 'Error occurred during token update' });
+  }
+});
+
   
 module.exports = router;

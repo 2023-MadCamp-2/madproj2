@@ -21,17 +21,33 @@ connectMongoDB();
 console.log("API for Login");
 
 // Login 라우트
+// router.post('/login', async (req, res) => {
+//   try {
+//     const { nickname, password } = req.body;
+//     console.log(nickname, password);
+//     // 사용자 검증
+//     const user = await client.db().collection('users').findOne({ nickname, password });
+//     if (!user) {
+//       return res.status(401).json({ message: 'Invalid nickname or password' });
+//     }
+
+//     res.status(200).json({ message: 'Login successful' });
+//   } catch (error) {
+//     console.error('Login 에러:', error);
+//     res.status(500).json({ message: 'Error occurred during login' });
+//   }
+// });
+// Login 백엔드
 router.post('/login', async (req, res) => {
   try {
     const { nickname, password } = req.body;
-    console.log(nickname, password);
     // 사용자 검증
     const user = await client.db().collection('users').findOne({ nickname, password });
     if (!user) {
       return res.status(401).json({ message: 'Invalid nickname or password' });
     }
 
-    res.status(200).json({ message: 'Login successful' });
+    res.status(200).json({ message: 'Login successful', user: { nickname: user.nickname } });  // nickname 추가
   } catch (error) {
     console.error('Login 에러:', error);
     res.status(500).json({ message: 'Error occurred during login' });
