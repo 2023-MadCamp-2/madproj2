@@ -7,6 +7,7 @@ import Modal from 'react-native-modal';
 import { Ionicons } from '@expo/vector-icons';
 import ContactDropdownMenu from '../../components/ContactDropdownMenu';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { API_URL } from '@env';
 
 const ContactListPage = ({navigation}) => {
 
@@ -51,7 +52,7 @@ const ContactListPage = ({navigation}) => {
   
   const fetchContacts = async () => {
     try {
-      const response = await fetch(`http://172.10.5.132:443/contact?myName=${myName}`, {
+      const response = await fetch(`${API_URL}/contact?myName=${myName}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -116,7 +117,7 @@ const ContactListPage = ({navigation}) => {
       }
       try {
         // 내 이름 정보를 서버에 전달
-        const response = await fetch('http://172.10.5.132:443/contact/add', {
+        const response = await fetch(`${API_URL}/contact/add`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -150,7 +151,7 @@ const ContactListPage = ({navigation}) => {
   const handleDeleteContact = async (contact) => {
     try {
       // 내 이름 정보를 서버에 전달
-      const response = await fetch(`http://172.10.5.132:443/contact/${contact.friendNickname}?myName=${myName}`, {
+      const response = await fetch(`${API_URL}/contact/${contact.friendNickname}?myName=${myName}`, {
         method: 'DELETE',
       });
 

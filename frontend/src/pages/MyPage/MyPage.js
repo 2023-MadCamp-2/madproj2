@@ -7,6 +7,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useFonts, BlackHanSans_400Regular } from '@expo-google-fonts/black-han-sans';
 import { DoHyeon_400Regular } from '@expo-google-fonts/do-hyeon';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { API_URL } from '@env';
 
 const MyPage = ({ navigation }) => {
   useEffect(() => {
@@ -22,7 +23,6 @@ const MyPage = ({ navigation }) => {
   const images = useSelector(state => state.images);
 
   const [selectedSound, setSelectedSound] = useState('sound1');
-  const [editingNickname, setEditingNickname] = useState(false);
   const [myName, setMyname] = useState('');
 
   useEffect(() => {
@@ -30,6 +30,7 @@ const MyPage = ({ navigation }) => {
       const value = await AsyncStorage.getItem('myNickname');
       if (value !== null && value !== undefined) {
         setMyname(value);
+        console.log('내 닉네임1:', value);
       }
     };
     getData();
@@ -45,8 +46,8 @@ const MyPage = ({ navigation }) => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        console.log('내 닉네임:', myName);
-        const response = await fetch(`http://172.10.5.132:443/auth/user?nickname=${myName}`, {
+        console.log('내 닉네임2:', myName);
+        const response = await fetch(`${API_URL}/auth/user?nickname=${myName}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -59,7 +60,7 @@ const MyPage = ({ navigation }) => {
             ...user,
             nickname: myName,
             name: data.name,
-            profileImage: images[myName],
+            profileImage: images[myName] || require('../../images/profile1.jpeg'),
           }));
         } else {
           console.log('회원 정보 불러오기 실패');
@@ -93,11 +94,6 @@ const MyPage = ({ navigation }) => {
     { label: '소리 2', value: 'sound2' },
     { label: '소리 3', value: 'sound3' },
   ];
-
-  const handleUpdateNickname = text => {
-    setUser(user => ({ ...user, nickname: text }));
-  };
-
   const handleUpdateProfileImage = () => {
     // 랜덤 이미지를 할당
     const images = [
@@ -208,120 +204,3 @@ const styles = StyleSheet.create({
 });
 
 export default MyPage;
-
-
-// 실제 음성파일 버전
-// import React from 'react';
-// import { useEffect, useState, useContext } from 'react';
-// import { View, Text, Image, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
-// import { Picker } from '@react-native-picker/picker';
-// import { Ionicons } from '@expo/vector-icons';
-// import { useFonts, BlackHanSans_400Regular } from '@expo-google-fonts/black-han-sans';
-// import { DoHyeon_400Regular } from '@expo-google-fonts/do-hyeon';
-// import { Audio } from 'expo-av';
-
-// const MyPage = ({ navigation }) => {
-//   useEffect(() => {
-//     navigation.setOptions({ headerShown: false }); // 헤더를 숨김
-//   }, []);
-  
-//   const [fontsLoaded] = useFonts({
-//     'BlackHanSans': BlackHanSans_400Regular,
-//     'DoHyeon': DoHyeon_400Regular,
-//   });
-
-//   const [selectedSound, setSelectedSound] = useState('sound1');
-//   const [editingNickname, setEditingNickname] = useState(false);
-
-//   const [user, setUser] = useState({
-//     nickname: '아기공룡둘리',
-//     name: '박진아',
-//     profileImage: require('../../images/profile1.jpeg'),
-//     backgroundImage: require('../../images/background1.jpeg'),
-//   });
-  
-//   const sounds = [
-//     { label: '소리 1', value: require('../../sounds/sound1.mp3') },
-//     { label: '소리 2', value: require('../../sounds/sound2.mp3') },
-//     { label: '소리 3', value: require('../../sounds/sound3.mp3') },
-//   ];
-
-//   const handleUpdateNickname = text => {
-//     setUser(user => ({ ...user, nickname: text }));
-//   };
-
-//   const handlePlaySound = async (sound) => {
-//     const soundObject = new Audio.Sound();
-//     try {
-//       await soundObject.loadAsync(sound);
-//       await soundObject.playAsync();
-//       setTimeout(() => {
-//         soundObject.stopAsync();
-//       }, 5000);
-//     } catch (error) {
-//       console.log(error);
-//     }
-//   };
-
-//   if (!fontsLoaded) {
-//     return null;
-//   }
-
-//   return (
-//     <View style={styles.container}>
-//       <Image source={user.backgroundImage} style={styles.backgroundImage} />
-//       <View style={styles.profileSection}>
-//         <Image source={user.profileImage} style={styles.profileImage} />
-//         <View style={styles.nicknameContainer}>
-//           {!editingNickname && (
-//             <Text style={styles.nickname}>{user.nickname}</Text>
-//           )}
-//           {editingNickname && (
-//             <>
-//               <TextInput
-//                 onChangeText={handleUpdateNickname}
-//                 value={user.nickname}
-//                 style={styles.nicknameInput}
-//                 autoFocus
-//               />
-//               <TouchableOpacity
-//                 style={styles.saveButton}
-//                 onPress={() => setEditingNickname(false)}
-//               >
-//                 <Text style={styles.saveButtonText}>저장</Text>
-//               </TouchableOpacity>
-//             </>
-//           )}
-//           <TouchableOpacity
-//             style={styles.editNicknameButton}
-//             onPress={() => setEditingNickname(!editingNickname)}
-//           >
-//             <Ionicons name="pencil" size={16} color="#888" />
-//           </TouchableOpacity>
-//         </View>
-//         <Text style={styles.name}>{user.name}</Text>
-//       </View>
-//       <View style={styles.settingsSection}>
-//         <Text style={styles.settingTitle}>🔔 삐삐 알람소리</Text>
-//         <Picker
-//           selectedValue={selectedSound}
-//           onValueChange={itemValue => setSelectedSound(itemValue)}
-//           style={styles.picker}
-//         >
-//           {sounds.map(sound => (
-//             <>
-//               <Picker.Item key={sound.value} label={sound.label} value={sound.value} />
-//               <TouchableOpacity onPress={() => handlePlaySound(sound.value)}>
-//                 <Ionicons name="volume-high" size={24} color="#888" />
-//               </TouchableOpacity>
-//             </>
-//           ))}
-//         </Picker>
-//       </View>
-//     </View>
-//   );
-// };
-
-// const styles = StyleSheet.create({
-// // 스타일 코드는 생략합니다.
-// });

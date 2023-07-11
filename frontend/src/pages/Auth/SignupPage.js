@@ -2,6 +2,7 @@ import React from 'react';
 import { View, StyleSheet, Text, TextInput, TouchableOpacity } from 'react-native';
 import { useFonts, BlackHanSans_400Regular } from '@expo-google-fonts/black-han-sans';
 import { DoHyeon_400Regular } from '@expo-google-fonts/do-hyeon';
+import { API_URL, REST_API_KEY } from '@env';
 
 const SignupPage = ({ navigation }) => {
   const [fontsLoaded] = useFonts({
@@ -23,7 +24,7 @@ const SignupPage = ({ navigation }) => {
       const checkData = { nickname };
 
       // 닉네임 중복 확인 API 호출
-      const response = await fetch('http://172.10.5.132:443/auth/checkNickname', {
+      const response = await fetch(`${API_URL}/auth/checkNickname`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -75,7 +76,7 @@ const SignupPage = ({ navigation }) => {
       };
 
       // 회원가입 API 호출
-      const response = await fetch('http://172.10.5.132:443/auth/signup', {
+      const response = await fetch(`${API_URL}/auth/signup`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
