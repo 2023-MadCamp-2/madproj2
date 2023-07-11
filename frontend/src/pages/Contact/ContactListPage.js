@@ -8,9 +8,6 @@ import { Ionicons } from '@expo/vector-icons';
 import ContactDropdownMenu from '../../components/ContactDropdownMenu';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-// 이미지 정보를 저장하는 객체
-const imageMap = {};
-
 const ContactListPage = ({navigation}) => {
 
   useEffect(() => {
@@ -27,7 +24,8 @@ const ContactListPage = ({navigation}) => {
 
   const dispatch = useDispatch();
   const contacts = useSelector(state => state.contacts);
-
+  const images = useSelector(state => state.images);
+  
   const [searchText, setSearchText] = useState('');
   const [selectedImage, setSelectedImage] = useState(null);
 
@@ -39,8 +37,6 @@ const ContactListPage = ({navigation}) => {
   const [myName, setMyname] = useState('');
 
   const [isLoading, setIsLoading] = useState(true);
-
-
 
   const getData = async () => {
     const value = await AsyncStorage.getItem('myNickname');
@@ -65,38 +61,38 @@ const ContactListPage = ({navigation}) => {
       if (response.ok) {
         const data = await response.json();
         console.log(data.contacts);
-        const contacts = data.contacts.map(contact => {
-          if (!imageMap[contact.friendNickname]) {
-            console.log('이미지가 없는 경우')
-            console.log(contact.friendNickname)
-            // 이미지가 null인 경우에만 랜덤 이미지를 할당
-            const images = [
-              require('../../images/profile1.jpeg'),
-              require('../../images/profile2.jpeg'),
-              require('../../images/profile3.jpeg'),
-              require('../../images/background1.jpeg')
-            ];
-            // 랜덤 이미지를 할당하고, imageMap에 저장
-            const image = images[Math.floor(Math.random() * images.length)];
-            imageMap[contact.friendNickname] = image;
-            return {
-              ...contact,
-              image
-            };
-          } else {
-            console.log('이미지가 있는 경우')
-            console.log(contact.friendNickname)
-            // 이미지가 이미 할당된 경우는 기존 이미지 유지
-            return {
-              ...contact,
-              image: imageMap[contact.friendNickname]
-            };
-          }
-        });
-        dispatch({ type: 'SET_CONTACTS', contacts });
+      const contacts = data.contacts.map(contact => {
+        if (!images[contact.friendNickname]) {
+          console.log('이미지가 없는 경우')
+          console.log(contact.friendNickname)
+          // 이미지가 null인 경우에만 랜덤 이미지를 할당
+          const images = [
+            require('../../images/profile1.jpeg'),
+            require('../../images/profile2.jpeg'),
+            require('../../images/profile3.jpeg'),
+            require('../../images/background1.jpeg')
+          ];
+          // 랜덤 이미지를 할당하고, Redux 스토어에 저장
+          const image = images[Math.floor(Math.random() * images.length)];
+          dispatch({ type: 'SET_IMAGE', nickname: contact.friendNickname, image });
+          return {
+            ...contact,
+            image
+          };
+        } else {
+          console.log('이미지가 있는 경우')
+          console.log(contact.friendNickname)
+          // 이미지가 이미 할당된 경우는 기존 이미지 유지
+          return {
+            ...contact,
+            image: images[contact.friendNickname]
+          };
+        }
+      });
+      dispatch({ type: 'SET_CONTACTS', contacts });
   
-        setIsLoading(false);
-      } else {
+      setIsLoading(false);}
+      else {
         console.log('친구 목록 불러오기 실패');
       }
     } catch (error) {
