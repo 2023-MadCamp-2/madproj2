@@ -2,7 +2,7 @@ import React from 'react';
 import { View, StyleSheet, Text, TextInput, TouchableOpacity } from 'react-native';
 import { useFonts, BlackHanSans_400Regular } from '@expo-google-fonts/black-han-sans';
 import { DoHyeon_400Regular } from '@expo-google-fonts/do-hyeon';
-import { API_URL, REST_API_KEY } from '@env';
+import { API_URL } from '@env';
 
 const SignupPage = ({ navigation }) => {
   const [fontsLoaded] = useFonts({
