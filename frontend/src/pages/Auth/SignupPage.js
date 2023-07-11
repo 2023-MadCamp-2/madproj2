@@ -2,6 +2,7 @@ import React from 'react';
 import { View, StyleSheet, Text, TextInput, TouchableOpacity } from 'react-native';
 import { useFonts, BlackHanSans_400Regular } from '@expo-google-fonts/black-han-sans';
 import { DoHyeon_400Regular } from '@expo-google-fonts/do-hyeon';
+import { API_URL, REST_API_KEY } from '@env';
 
 const SignupPage = ({ navigation }) => {
   const [fontsLoaded] = useFonts({
@@ -13,8 +14,59 @@ const SignupPage = ({ navigation }) => {
   const [nickname, setNickname] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [confirmPassword, setConfirmPassword] = React.useState('');
+  const [isNicknameChecked, setIsNicknameChecked] = React.useState(false);
+  const [tempName, setTempName] = React.useState('');
+
+
+  const handleCheckNickname = async () => {
+    try {
+      // 닉네임 중복 확인 요청을 보낼 데이터 생성
+      const checkData = { nickname };
+
+      // 닉네임 중복 확인 API 호출
+      const response = await fetch(`${API_URL}/auth/checkNickname`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(checkData),
+      });
+
+      if (response.ok) {
+        // 닉네임 중복 확인 성공 시 처리할 로직 작성
+        alert('닉네임 사용 가능');
+        setIsNicknameChecked(true);
+        setTempName(nickname);
+      } else {
+        // 닉네임 중복 확인 실패 시 처리할 로직 작성
+        alert('닉네임 사용 불가');
+        setIsNicknameChecked(false);
+        const errorData = await response.json();
+        console.log('에러 메시지:', errorData.message);
+      }
+    } catch (error) {
+      console.error('닉네임 중복 확인 요청 에러:', error);
+    }
+  };
 
   const handleSignup = async () => {
+
+    if(!name || !nickname || !password || !confirmPassword) {
+      alert('빈 칸을 모두 입력해주세요');
+      return;
+    } else if (!isNicknameChecked) {
+      // 닉네임 중복확인이 되지 않았으면 회원가입 진행하지 않음
+      alert('닉네임 중복확인을 해주세요');
+      return;
+    } else if(nickname !== tempName) {
+      alert('닉네임 중복확인을 다시 해주세요');
+      return;
+    }
+    else if(password !== confirmPassword) { 
+      alert('비밀번호가 일치하지 않습니다');
+      return;
+    }
+
     try {
       // 회원가입 요청을 보낼 데이터 생성
       const userData = {
@@ -24,7 +76,7 @@ const SignupPage = ({ navigation }) => {
       };
 
       // 회원가입 API 호출
-      const response = await fetch('http://172.10.5.132:443/auth/signup', {
+      const response = await fetch(`${API_URL}/auth/signup`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -54,7 +106,7 @@ const SignupPage = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={{ ...styles.title, marginTop: 150 }}>회원가입</Text>
+      <Text style={{ ...styles.title, marginTop:'25%' }}>회원가입</Text>
 
       <View style={styles.form}>
         <TextInput
@@ -72,7 +124,7 @@ const SignupPage = ({ navigation }) => {
                 style={styles.input}
                 returnKeyType="done"
             />
-            <TouchableOpacity style={styles.checkButton} >
+            <TouchableOpacity style={styles.checkButton} onPress={handleCheckNickname}>
                 <Text style={{ color: 'white', fontFamily: 'DoHyeon'}}>중복확인</Text>
             </TouchableOpacity>
         </View>
