@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 import { useFonts,  DoHyeon_400Regular } from '@expo-google-fonts/do-hyeon';
 import { BlackHanSans_400Regular } from '@expo-google-fonts/black-han-sans';
+import { API_URL } from '@env';
 
 const SendPage = ({ navigation }) => {
   useEffect(() => {
@@ -39,7 +40,7 @@ const SendPage = ({ navigation }) => {
       };
       
       try {
-        const response = await fetch('http://172.10.5.132:443/chat/send', {
+        const response = await fetch(`${API_URL}/chat/send`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -62,8 +63,6 @@ const SendPage = ({ navigation }) => {
         console.error('Error occurred while sending message:', error);
         alert('Error occurred while sending message:', error.toString());
       }
-
-      /////
       alert('Sent', `Sent pager to ${recipient} with message ${message}`);
       setRecipient('');
       setMessage('');
