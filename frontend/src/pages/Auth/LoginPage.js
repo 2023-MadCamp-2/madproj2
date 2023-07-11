@@ -30,11 +30,14 @@ const LoginPage = ({ navigation }) => {
   
   const handleLogin = async () => {
     try {
+      console.log("handle Login!!!!");
       // 로그인 요청을 보낼 데이터 생성
       const userData = {
         nickname,
         password,
       };
+
+      console.log(API_URL);``
 
       // 로그인 API 호출
       const response = await fetch(`${API_URL}/auth/login`, {
@@ -157,8 +160,6 @@ const LoginPage = ({ navigation }) => {
       console.log('카카오 로그인 실패');
     }
   };
-  
-  
   
   if (!fontsLoaded) {
     return null; // 폰트 로딩 중에는 컴포넌트를 렌더링하지 않습니다.
