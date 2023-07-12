@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { View, Text, TextInput, Image, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
 import { useFonts, BlackHanSans_400Regular } from '@expo-google-fonts/black-han-sans';
 import { DoHyeon_400Regular } from '@expo-google-fonts/do-hyeon';
+import { API_URL } from '@env';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const HistoryListPage = ({ navigation }) => {
   useEffect(() => {
     navigation.setOptions({ headerShown: false }); // 헤더를 숨김
+    fetchChats();
   }, []);
 
   const [fontsLoaded] = useFonts({
@@ -14,20 +17,63 @@ const HistoryListPage = ({ navigation }) => {
     'DoHyeon': DoHyeon_400Regular,
   });
 
-  const chats = [
-    { id: 1, nickname: '아기공룡둘리', name: '박진아', image: require('../../images/profile1.jpeg'), lastMessage: '586' },
-    { id: 2, nickname: '검정기영이', name: '하도영', image: require('../../images/profile2.jpeg'), lastMessage: '045' },
-    { id: 3, nickname: '응답했다덕선이', name: '성덕선', image: require('../../images/profile3.jpeg'), lastMessage: '8282' },
-    { id: 4, nickname: '아기공룡둘리', name: '박진아', image: require('../../images/background1.jpeg'), lastMessage: '9090' },
-    { id: 5, nickname: '삐삐삐삐', name: '킬크키', image: require('../../images/profile1.jpeg'), lastMessage: '0123124' },
-    { id: 6, nickname: '메롱메롱', name: '진아아', image: require('../../images/profile3.jpeg'), lastMessage: '486' },
-    { id: 7, nickname: '바보바보', name: '도오영', image: require('../../images/background1.jpeg'), lastMessage: '12408712' },
+  const dispatch = useDispatch();
+  const images = useSelector(state => state.images);
 
-
-    // ... 나머지 채팅방
-  ];
-
+  const [chats, setChats] = useState([]);
+  const fetchChats = async () => {
+    try {
+      const nickname = await AsyncStorage.getItem('myNickname');
   
+      const response = await fetch(`${API_URL}/history/${nickname}`);
+      const data = await response.json();
+      console.log(data);
+  
+      const chats = await Promise.all(data.map(async (item, index) => {
+        // 백엔드 API 호출하여 유저의 이름 검색
+        const response = await fetch(`${API_URL}/auth/user?nickname=${item.user}`);
+        const userData = await response.json();
+        const name = userData.name;
+  
+        if (!images[item.user]) {
+          // 이미지가 null인 경우에만 랜덤 이미지를 할당
+          const images = [
+            require('../../images/profile1.jpeg'),
+            require('../../images/profile2.jpeg'),
+            require('../../images/profile3.jpeg'),
+            require('../../images/background1.jpeg')
+          ];
+          // 랜덤 이미지를 할당하고, Redux 스토어에 저장
+          const image = images[Math.floor(Math.random() * images.length)];
+          dispatch({ type: 'SET_IMAGE', nickname: item.user, image });
+          return {
+            id: index,
+            nickname: item.user,
+            name,
+            image,
+            lastMessage: item.lastMessage.message
+          };
+        } else {
+          // 이미지가 이미 할당된 경우는 기존 이미지 유지
+          return {
+            id: index,
+            nickname: item.user,
+            name,
+            image: images[item.user],
+            lastMessage: item.lastMessage.message
+          };
+        }
+      }));
+  
+      setChats(chats);
+    } catch (error) {
+      console.error('채팅방 데이터 가져오기 에러:', error);
+    }
+  };  
+  
+
+  console.log('채팅방 목록:', chats);
+
   if (!fontsLoaded) {
     return null;
   }
@@ -40,7 +86,7 @@ const HistoryListPage = ({ navigation }) => {
         showsVerticalScrollIndicator={false}
       >
         {chats.map((item, index) => (
-          <TouchableOpacity key={item.id} 
+          <TouchableOpacity key={index} 
           onPress={() =>
             navigation.navigate('HistoryRoom', {
               chat: item,
