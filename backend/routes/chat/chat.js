@@ -42,7 +42,7 @@ router.post('/send', async (req, res) => {
       sound: 'default',
       title: '삐삐',
       body: `${from} 79가 ${message} 보냄 8282 확인부탁!`,
-      data: { message },
+      data: { from, message },
     });
 
     if (response.status !== 200) {
