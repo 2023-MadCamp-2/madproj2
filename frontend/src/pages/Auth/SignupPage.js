@@ -90,7 +90,7 @@ const SignupPage = ({ navigation }) => {
         navigation.navigate('Login');
       } else {
         // 회원가입 실패 시 처리할 로직 작성
-        console.log('회원가입 실패');
+        alert('회원가입 실패');
         const errorData = await response.json();
         console.log('에러 메시지:', errorData.message);
       }

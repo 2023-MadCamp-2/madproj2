@@ -67,7 +67,7 @@ const LoginPage = ({ navigation }) => {
         navigation.navigate('Main', { screen: 'Send' });
       } else {
         // 로그인 실패 시 처리할 로직 작성
-        console.log('로그인 실패');
+        alert('로그인 실패');
         const errorData = await response.json();
         console.log('에러 메시지:', errorData.message);
       }
