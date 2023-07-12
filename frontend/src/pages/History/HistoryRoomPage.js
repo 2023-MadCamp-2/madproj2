@@ -103,11 +103,11 @@ const styles = StyleSheet.create({
     headerLeft: {
         flexDirection: 'row',
         alignItems: 'center',
-        paddingHorizontal: 15,
+        paddingHorizontal: 8,
     },
     headerRight: {
         justifyContent: 'center',
-        paddingHorizontal: 15,
+        paddingHorizontal: 8,
     },
     contentContainer: {
         flex: 1,
