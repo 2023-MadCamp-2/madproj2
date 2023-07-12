@@ -26,6 +26,14 @@ const axios = require('axios');
 router.post('/send', async (req, res) => {
   try {
     const { from, to, message } = req.body;
+    // 사용자 유효성 검사
+    const from_valid = await client.db().collection('users').findOne({nickname : from})
+    const to_valid = await client.db().collection('users').findOne({nickname : to})
+        
+    if(!from_valid || !to_valid){
+      return res.status(401).json({ message: 'Invalid users' });
+    }
+    
     // 메시지 생성
     const newMessage = { from, to, message, date: new Date() };
     await client.db().collection('messages').insertOne(newMessage);
