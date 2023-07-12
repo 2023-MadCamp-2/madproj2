@@ -9,6 +9,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { API_URL, REST_API_KEY } from '@env';
 import * as Notifications from 'expo-notifications';
 import { Ionicons } from '@expo/vector-icons';
+import CustomAlert from '../../components/CustomAlert';
 
 const LoginPage = ({ navigation }) => { 
 
@@ -26,6 +27,9 @@ const LoginPage = ({ navigation }) => {
 
   const [nickname, setNickname] = useState("");
   const [password, setPassword] = useState("");
+
+  const [isVisibleAlert, setIsVisibleAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState('');
 
   const onChangeId = (payload) => setNickname(payload);
   const onChangePW = (payload) => setPassword(payload);
@@ -67,7 +71,8 @@ const LoginPage = ({ navigation }) => {
         navigation.navigate('Main', { screen: 'Send' });
       } else {
         // 로그인 실패 시 처리할 로직 작성
-        alert('로그인 실패');
+        setAlertMessage('로그인 실패');
+        setIsVisibleAlert(true);
         const errorData = await response.json();
         console.log('에러 메시지:', errorData.message);
       }
@@ -192,6 +197,7 @@ const LoginPage = ({ navigation }) => {
     }
   };
   
+    
   if (!fontsLoaded) {
     return null; // 폰트 로딩 중에는 컴포넌트를 렌더링하지 않습니다.
   }
@@ -232,6 +238,11 @@ const LoginPage = ({ navigation }) => {
               </View>
             </TouchableOpacity>
           </View>
+          <CustomAlert 
+            isVisible={isVisibleAlert} 
+            message={alertMessage} 
+            onClose={() => setIsVisibleAlert(false)} 
+          />
       </View>
   )
 }

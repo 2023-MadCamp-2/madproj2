@@ -8,6 +8,7 @@ import { Ionicons } from '@expo/vector-icons';
 import ContactDropdownMenu from '../../components/ContactDropdownMenu';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { API_URL } from '@env';
+import CustomAlert from '../../components/CustomAlert';
 
 const ContactListPage = ({navigation}) => {
 
@@ -38,6 +39,9 @@ const ContactListPage = ({navigation}) => {
   const [myName, setMyname] = useState('');
 
   const [isLoading, setIsLoading] = useState(true);
+
+  const [isVisibleAlert, setIsVisibleAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState('');
 
   const getData = async () => {
     const value = await AsyncStorage.getItem('myNickname');
@@ -123,7 +127,8 @@ const ContactListPage = ({navigation}) => {
 
   const handleAddContact = async () => {
       if (name.trim() === '' || nickname.trim() === '') {
-        alert('이름과 별명은 필수 입력 사항입니다.');
+        setAlertMessage('이름과 별명은 필수 입력 사항입니다.');
+        setIsVisibleAlert(true);
         return;
       }
       try {
@@ -279,6 +284,11 @@ const ContactListPage = ({navigation}) => {
           </TouchableOpacity>
         </View>
       </Modal>
+      <CustomAlert 
+            isVisible={isVisibleAlert} 
+            message={alertMessage} 
+            onClose={() => setIsVisibleAlert(false)} 
+      />
     </View>
   );
 }

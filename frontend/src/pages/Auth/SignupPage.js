@@ -3,6 +3,7 @@ import { View, StyleSheet, Text, TextInput, TouchableOpacity } from 'react-nativ
 import { useFonts, BlackHanSans_400Regular } from '@expo-google-fonts/black-han-sans';
 import { DoHyeon_400Regular } from '@expo-google-fonts/do-hyeon';
 import { API_URL } from '@env';
+import CustomAlert from '../../components/CustomAlert';
 
 const SignupPage = ({ navigation }) => {
   const [fontsLoaded] = useFonts({
@@ -16,6 +17,9 @@ const SignupPage = ({ navigation }) => {
   const [confirmPassword, setConfirmPassword] = React.useState('');
   const [isNicknameChecked, setIsNicknameChecked] = React.useState(false);
   const [tempName, setTempName] = React.useState('');
+
+  const [isVisibleAlert, setIsVisibleAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState('');
 
   const handleCheckNickname = async () => {
     try {
@@ -33,12 +37,14 @@ const SignupPage = ({ navigation }) => {
 
       if (response.ok) {
         // 닉네임 중복 확인 성공 시 처리할 로직 작성
-        alert('닉네임 사용 가능');
+        setAlertMessage('닉네임 사용 가능');
+        setIsVisibleAlert(true);
         setIsNicknameChecked(true);
         setTempName(nickname);
       } else {
         // 닉네임 중복 확인 실패 시 처리할 로직 작성
-        alert('닉네임 사용 불가');
+        setAlertMessage('닉네임 사용 불가');
+        setIsVisibleAlert(true);
         setIsNicknameChecked(false);
         const errorData = await response.json();
         console.log('에러 메시지:', errorData.message);
@@ -51,18 +57,22 @@ const SignupPage = ({ navigation }) => {
   const handleSignup = async () => {
 
     if(!name || !nickname || !password || !confirmPassword) {
-      alert('빈 칸을 모두 입력해주세요');
+      setAlertMessage('빈 칸을 모두 입력해주세요');
+      setIsVisibleAlert(true);
       return;
     } else if (!isNicknameChecked) {
       // 닉네임 중복확인이 되지 않았으면 회원가입 진행하지 않음
-      alert('닉네임 중복확인을 해주세요');
+      setAlertMessage('닉네임 중복확인을 해주세요');
+      setIsVisibleAlert(true);
       return;
     } else if(nickname !== tempName) {
-      alert('닉네임 중복확인을 다시 해주세요');
+      setAlertMessage('닉네임 중복확인을 다시 해주세요');
+      setIsVisibleAlert(true);
       return;
     }
     else if(password !== confirmPassword) { 
-      alert('비밀번호가 일치하지 않습니다');
+      setAlertMessage('비밀번호가 일치하지 않습니다');
+      setIsVisibleAlert(true);
       return;
     }
 
@@ -163,6 +173,11 @@ const SignupPage = ({ navigation }) => {
             </Text>
         </TouchableOpacity>
       </View>
+      <CustomAlert 
+        isVisible={isVisibleAlert} 
+        message={alertMessage} 
+        onClose={() => setIsVisibleAlert(false)} 
+      />
     </View>
   );
 };
