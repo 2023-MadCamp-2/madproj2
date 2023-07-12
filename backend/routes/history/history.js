@@ -20,7 +20,6 @@ async function connectMongoDB() {
 connectMongoDB();
 
 
-
 router.get('/:nickname', async (req, res) => {
     const nickname = req.params.nickname;
 
