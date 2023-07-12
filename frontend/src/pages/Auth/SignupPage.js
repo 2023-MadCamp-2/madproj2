@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState }  from 'react';
 import { View, StyleSheet, Text, TextInput, TouchableOpacity } from 'react-native';
 import { useFonts, BlackHanSans_400Regular } from '@expo-google-fonts/black-han-sans';
 import { DoHyeon_400Regular } from '@expo-google-fonts/do-hyeon';
@@ -16,7 +16,6 @@ const SignupPage = ({ navigation }) => {
   const [confirmPassword, setConfirmPassword] = React.useState('');
   const [isNicknameChecked, setIsNicknameChecked] = React.useState(false);
   const [tempName, setTempName] = React.useState('');
-
 
   const handleCheckNickname = async () => {
     try {
@@ -100,13 +99,25 @@ const SignupPage = ({ navigation }) => {
     }
   };
 
+  const [isFormComplete, setIsFormComplete] = useState(false);
+
+  // 중복확인과 입력 칸 상태 변화를 모니터링하여 회원가입 버튼 색 변경
+  useEffect(() => {
+    if (name && nickname && password && confirmPassword && isNicknameChecked) {
+      setIsFormComplete(true);
+    } else {
+      setIsFormComplete(false);
+    }
+  }, [name, nickname, password, confirmPassword, isNicknameChecked]);
+
+
   if (!fontsLoaded) {
     return null;
   }
 
   return (
     <View style={styles.container}>
-      <Text style={{ ...styles.title, marginTop:'25%' }}>회원가입</Text>
+      <Text style={{ ...styles.title, marginTop:'40%' }}>회원가입</Text>
 
       <View style={styles.form}>
         <TextInput
@@ -147,7 +158,9 @@ const SignupPage = ({ navigation }) => {
       </View>
       <View style={styles.button}>
         <TouchableOpacity onPress={handleSignup}>
-          <Text style={{ ...styles.Btn, backgroundColor: 'white' }}>회원가입</Text>
+            <Text style={{ ...styles.Btn, backgroundColor: isFormComplete ? 'black' : 'white', color: isFormComplete ? 'white' : 'black' }}>
+                회원가입
+            </Text>
         </TouchableOpacity>
       </View>
     </View>

@@ -36,7 +36,7 @@ const HistoryListPage = ({ navigation }) => {
     <View style={styles.container}>
       <ScrollView
         style={styles.listContainer}
-        contentContainerStyle={styles.listContent}
+        contentContainerStyle={{...styles.listContent, paddingBottom: 40 }}
         showsVerticalScrollIndicator={false}
       >
         {chats.map((item, index) => (
@@ -74,40 +74,32 @@ const styles = StyleSheet.create({
   },
   listContainer: {
     paddingTop: 30,
-    width: '80%',
+    width: '90%',
   },
   listContent: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
   },
   card: {
     borderRadius: 20,
     overflow: 'hidden',
     marginBottom: 10,
     alignItems:'center',
-    borderWidth: 2,
+    borderWidth:1,
     borderColor:'#ddd',
-
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 10,
-    },
-    shadowOpacity: .3,
-    shadowRadius: 3,
-    elevation: 3,
+    marginHorizontal: 9,
   },
   cardMarginRight: {
     marginRight: '2%',
   },
   cardTop:{
-    position:'relative'
+       position:'relative'
   },
   cardBackground:{
-    width:140,
-    height:140,
-    resizeMode:'cover',
+       width:140,
+       height:140,
+       resizeMode:'cover',
   },
   overlay:{
       position:'absolute',
@@ -120,14 +112,13 @@ const styles = StyleSheet.create({
   },
   lastMessage:{
        color:'white',
-       fontSize:22,
-       fontFamily:'BlackHanSans',
+       fontSize:15,
+       fontFamily:'DoHyeon'
   },
   cardBottom:{
-      width:'100%',
       backgroundColor:'white',
       paddingVertical:10,
-      paddingHorizontal:20,
+      paddingHorizontal:10,
       borderBottomLeftRadius:20,
       borderBottomRightRadius:20
   },

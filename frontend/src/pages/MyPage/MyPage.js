@@ -88,12 +88,7 @@ const MyPage = ({ navigation }) => {
       setUser(user => ({ ...user, profileImage: image }));
     }
   }, []);
-  
-  const sounds = [
-    { label: '소리 1', value: 'sound1' },
-    { label: '소리 2', value: 'sound2' },
-    { label: '소리 3', value: 'sound3' },
-  ];
+
   const handleUpdateProfileImage = () => {
     // 랜덤 이미지를 할당
     const images = [
@@ -126,19 +121,6 @@ const MyPage = ({ navigation }) => {
         </View>
         <Text style={styles.name}>{user.name}</Text>
       </View>
-      <View style={styles.settingsSection}>
-        <Text style={styles.settingTitle}>🔔 삐삐 알람소리 🔔</Text>
-        <Picker
-          selectedValue={selectedSound}
-          onValueChange={itemValue => setSelectedSound(itemValue)}
-          style={styles.picker}
-          itemStyle={{ fontFamily: 'DoHyeon', fontSize:22 }}
-        >
-          {sounds.map(sound => (
-            <Picker.Item  key={sound.value} label={sound.label} value={sound.value} />
-          ))}
-        </Picker>
-      </View>
     </View>
   );
 };
@@ -151,18 +133,18 @@ const styles = StyleSheet.create({
   },
   backgroundImage: {
     width: '100%',
-    height: 200,
+    height: '40%',
   },
   profileSection: {
     alignItems: 'center',
     paddingVertical: 20,
-    marginTop: -70,
+    marginTop: -110,
   },
   profileImage: {
-    width: 150,
-    height: 150,
-    borderRadius: 75,
-    borderWidth: 3,
+    width: 180,
+    height: 180,
+    borderRadius: 90,
+    borderWidth: 5,
     borderColor: 'white',
   },
   saveButtonText : {
@@ -175,13 +157,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   nickname: {
-    fontSize: 30,
+    fontSize: 26,
     fontWeight: 'bold',
     marginVertical: 10,
     fontFamily: 'DoHyeon',
   },
   name: {
-    fontSize: 25,
+    fontSize: 22,
     color: '#888',
     fontFamily: 'DoHyeon',
   },
@@ -196,10 +178,6 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     width: '100%',
     textAlign: 'center',
-  },
-  picker: {
-    height: 50,
-    width: '50%',
   },
 });
 

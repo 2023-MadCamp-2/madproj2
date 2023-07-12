@@ -140,12 +140,6 @@ const ContactListPage = ({navigation}) => {
       } catch (error) {
             console.error('친구 추가 에러:', error);
       } 
-    
-  };
-
-  const handleEditContact = contact => {
-    // 연락처 편집 로직 구현
-    setSelectedContact(null);
   };
 
   const handleDeleteContact = async (contact) => {
@@ -224,7 +218,6 @@ const ContactListPage = ({navigation}) => {
                   style={[styles.dropdownMenu, { zIndex: 3 }]}
                   onBackdropPress={() => setSelectedContact(null)}
                   onCloseMenu={() => handleCloseMenu(item)}
-                  onEditContact={() => handleEditContact(item)}
                   onDeleteContact={() => handleDeleteContact(item)}
                 />
               )}
@@ -233,14 +226,19 @@ const ContactListPage = ({navigation}) => {
         />)
        : (
         <View style={styles.listContainer}>
-          <Text>No Contacts</Text>
+          <View style={styles.emptyContainer}>
+            <Ionicons name="person-circle-outline" size={120} color="#888" />
+            <Text style={styles.emptyText}>친구가 없습니다.</Text>
+            <Text style={styles.emptySubText}>삐삐 친구를 등록하세요.</Text>
+          </View>
         </View>
+
        )}
         
       <TouchableOpacity style={styles.floatingButton} onPress={() => setIsModalVisible(true)}>
         <Ionicons name="add" size={30} color="white" />
       </TouchableOpacity>
-      <Modal isVisible={selectedImage !== null} onBackdropPress={() => setSelectedImage(null)}>
+      <Modal isVisible={selectedImage !== null} onBackdropPress={() => setSelectedImage(null)} backdropOpacity={0.1}>
         <View style={styles.modalContent}>
           <Image source={selectedImage} style={styles.modalImage} resizeMode="cover" />
         </View>
@@ -252,21 +250,21 @@ const ContactListPage = ({navigation}) => {
       </Modal>
       <Modal isVisible={isModalVisible} onBackdropPress={() => setIsModalVisible(false)}>
         <View style={styles.modalContainer}>
-          <Text style={styles.modalTitle}>Add Contact</Text>
+          <Text style={styles.modalTitle}>삐삐79 추가</Text>
           <TextInput
-            placeholder="Name"
+            placeholder="이름"
             value={name}
             onChangeText={setName}
             style={styles.modalInput}
           />
           <TextInput
-            placeholder="Nickname"
+            placeholder="닉네임"
             value={nickname}
             onChangeText={setNickname}
             style={styles.modalInput}
           />
           <TouchableOpacity style={styles.modalButton} onPress={handleAddContact}>
-            <Text style={styles.modalButtonText}>Add</Text>
+            <Text style={styles.modalButtonText}>추가</Text>
           </TouchableOpacity>
         </View>
       </Modal>
@@ -351,10 +349,10 @@ const styles = StyleSheet.create({
     },
     modalContainer: {
       backgroundColor: 'white',
-      borderRadius: 25,
-      padding: 30,
-      width: '80%',
-      marginHorizontal: '10%',
+      borderRadius: 40,
+      padding: 40,
+      width: '75%',
+      marginHorizontal: '12.5%',
     },
     modalTitle: {
       fontSize: 20,
@@ -392,6 +390,24 @@ const styles = StyleSheet.create({
       borderRadius: 30,
       justifyContent: 'center',
       alignItems: 'center',
+    },
+    emptyContainer: {
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginTop: '15%',
+    },
+    emptyText: {
+      fontSize: 24,
+      fontWeight: 'bold',
+      marginTop: 20,
+      color: '#888',
+      fontFamily: 'BlackHanSans'
+    },
+    emptySubText: {
+      fontSize: 16,
+      marginTop: 10,
+      color: '#888',
+      fontFamily: 'DoHyeon'
     },
   });
 

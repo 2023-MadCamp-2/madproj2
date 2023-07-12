@@ -44,7 +44,7 @@ const HistoryRoomPage = ({ route, navigation }) => {
                     </View>
                 </View>
                 <View style={styles.headerRight}>
-                    <TouchableOpacity onPress={() => { navigation.navigate('Send')}}>
+                    <TouchableOpacity onPress={() => { navigation.navigate('Send', { recipient: chat.nickname })}}>
                         <MaterialCommunityIcons name="microphone" size={40} color="#000" />
                     </TouchableOpacity>
                 </View>
@@ -103,11 +103,11 @@ const styles = StyleSheet.create({
     headerLeft: {
         flexDirection: 'row',
         alignItems: 'center',
-        paddingHorizontal: 15,
+        paddingHorizontal: 8,
     },
     headerRight: {
         justifyContent: 'center',
-        paddingHorizontal: 15,
+        paddingHorizontal: 8,
     },
     contentContainer: {
         flex: 1,
