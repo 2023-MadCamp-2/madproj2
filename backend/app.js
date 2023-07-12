@@ -42,8 +42,12 @@ app.use('/auth', updateTokenRouter);
 const contactRouter = require('./routes/contact/contact');
 app.use('/contact', contactRouter);
 
+const historyRouter = require('./routes/history/history');
+app.use('/history', historyRouter);
+
 const chatRouter = require('./routes/chat/chat');
 app.use('/chat', chatRouter);
+
 
 
 // 에러 핸들러 설정
