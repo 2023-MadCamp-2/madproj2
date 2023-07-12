@@ -12,6 +12,7 @@ const HistoryListPage = ({ navigation }) => {
     fetchChats();
   }, []);
 
+
   const [fontsLoaded] = useFonts({
     'BlackHanSans': BlackHanSans_400Regular,
     'DoHyeon': DoHyeon_400Regular,
