@@ -1,12 +1,14 @@
 import React from 'react';
 import { useEffect, useState, useContext } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { View, StyleSheet, Text, TextInput,TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Text, TextInput,TouchableOpacity} from 'react-native';
 import { useFonts, BlackHanSans_400Regular } from '@expo-google-fonts/black-han-sans';
 import { DoHyeon_400Regular } from '@expo-google-fonts/do-hyeon';
 import * as AuthSession from 'expo-auth-session';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { API_URL, REST_API_KEY } from '@env';
+import * as Notifications from 'expo-notifications';
+import { Ionicons } from '@expo/vector-icons';
 
 const LoginPage = ({ navigation }) => { 
 
@@ -30,14 +32,11 @@ const LoginPage = ({ navigation }) => {
   
   const handleLogin = async () => {
     try {
-      console.log("handle Login!!!!");
       // 로그인 요청을 보낼 데이터 생성
       const userData = {
         nickname,
         password,
       };
-
-      console.log(API_URL);``
 
       // 로그인 API 호출
       const response = await fetch(`${API_URL}/auth/login`, {
@@ -49,11 +48,21 @@ const LoginPage = ({ navigation }) => {
       });
 
       if (response.ok) {
-        // 로그인 성공 시 처리할 로직 작성
-        console.log('로그인 성공');
 
         AsyncStorage.setItem('myNickname', userData.nickname);
         
+        // 로그인 성공 후 알림 토큰 받아오기
+        const token = await Notifications.getExpoPushTokenAsync();
+
+        const tokenUpdateResponse = await fetch(`${API_URL}/auth/token`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ token: token.data, nickname: userData.nickname }),
+        });
+        console.log('Token update response:', await tokenUpdateResponse.json());
+
         // 로그인 성공 후 다음 화면으로 이동
         navigation.navigate('Main', { screen: 'Send' });
       } else {
@@ -113,12 +122,23 @@ const LoginPage = ({ navigation }) => {
       if (response.ok) {
         // 기존 사용자 데이터가 있는 경우
         console.log('기존 사용자 데이터 있음');
+
+        AsyncStorage.setItem('myNickname', userData.nickname);
         
-        // AsyncStorage에 nickname 저장
-        AsyncStorage.setItem('myNickname', nickname);
-        
+        // 로그인 성공 후 알림 토큰 받아오기
+        const token = await Notifications.getExpoPushTokenAsync();
+
+        const tokenUpdateResponse = await fetch(`${API_URL}/auth/token`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ token: token.data, nickname: userData.nickname }),
+        });
+        console.log('Token update response:', await tokenUpdateResponse.json());
+
         // 로그인 성공 후 다음 화면으로 이동
-        navigation.navigate('Main', { screen: 'Contact' });
+        navigation.navigate('Main', { screen: 'Send' });
       } else {
         // 기존 사용자 데이터가 없는 경우
         console.log('기존 사용자 데이터 없음');
@@ -145,7 +165,18 @@ const LoginPage = ({ navigation }) => {
           
           // Redux 스토어에 프로필 이미지 저장
           dispatch({ type: 'SET_IMAGE', nickname, image: { uri: userInfoResult.kakao_account.profile.profile_image_url } });
-          
+          // 로그인 성공 후 알림 토큰 받아오기
+          const token = await Notifications.getExpoPushTokenAsync();
+
+          const tokenUpdateResponse = await fetch(`${API_URL}/auth/token`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ token: token.data, nickname: userData.nickname }),
+          });
+          console.log('Token update response:', await tokenUpdateResponse.json());
+
           // 로그인 성공 후 다음 화면으로 이동
           navigation.navigate('Main', { screen: 'Contact' });
         } else {
@@ -167,7 +198,7 @@ const LoginPage = ({ navigation }) => {
 
   return(
       <View style={styles.container}>
-          <Text style={{...styles.title, marginTop: '30%'}}>응답하라</Text>
+          <Text style={{...styles.title, marginTop: '40%'}}>응답하라</Text>
           <Text style={styles.title}>삐삐</Text>
 
           <View style={styles.form}>
@@ -195,7 +226,10 @@ const LoginPage = ({ navigation }) => {
                   <Text style={{...styles.Btn, backgroundColor:'black', color:'white'}}>간편 회원가입</Text>
               </TouchableOpacity>
               <TouchableOpacity onPress={handleKakaoLogin}>
-              <Text style={{ ...styles.Btn, borderWidth: 0, backgroundColor: '#fae100', color: 'black' }}>카카오 로그인</Text>
+              <View style={{...styles.kakaoButton, justifyContent: 'center', borderWidth: 0}}>
+                <Ionicons name="chatbox" size={20} color="black" />
+                <Text style={styles.kakaoButtonText}>카카오 로그인</Text>
+              </View>
             </TouchableOpacity>
           </View>
       </View>
@@ -240,7 +274,22 @@ const styles = StyleSheet.create({
       borderWidth:1,
       fontFamily: 'DoHyeon',
   },
-  
+  kakaoButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#fae100',
+    width: 300,
+    marginVertical: 5,
+    paddingVertical: 10,
+    textAlign: 'center',
+    borderRadius: 10,
+    borderWidth:1,
+  },
+  kakaoButtonText: {
+    fontSize: 16,
+    marginLeft: 10,
+    fontFamily: 'DoHyeon',
+  },
 })
 
 export default LoginPage;

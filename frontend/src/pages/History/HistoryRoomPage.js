@@ -44,7 +44,7 @@ const HistoryRoomPage = ({ route, navigation }) => {
                     </View>
                 </View>
                 <View style={styles.headerRight}>
-                    <TouchableOpacity onPress={() => { navigation.navigate('Send')}}>
+                    <TouchableOpacity onPress={() => { navigation.navigate('Send', { recipient: chat.nickname })}}>
                         <MaterialCommunityIcons name="microphone" size={40} color="#000" />
                     </TouchableOpacity>
                 </View>

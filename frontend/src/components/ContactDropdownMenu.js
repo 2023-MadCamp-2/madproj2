@@ -3,14 +3,11 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 
-const ContactDropdownMenu = ({ onCloseMenu, onEditContact, onDeleteContact }) => {
+const ContactDropdownMenu = ({ onCloseMenu, onDeleteContact }) => {
   return (
     <View style={styles.dropdownMenu}>
       <TouchableOpacity onPress={onCloseMenu} style={styles.menuItem}>
-        <FontAwesome name="close" size={16} color="red" />
-      </TouchableOpacity>
-      <TouchableOpacity onPress={onEditContact} style={styles.menuItem}>
-        <Text style={styles.menuItemText}>편집</Text>
+        <FontAwesome name="close" size={18} color="red" />
       </TouchableOpacity>
       <TouchableOpacity onPress={onDeleteContact} style={styles.menuItem}>
         <Text style={styles.menuItemText}>삭제</Text>
@@ -22,7 +19,7 @@ const ContactDropdownMenu = ({ onCloseMenu, onEditContact, onDeleteContact }) =>
 const styles = StyleSheet.create({
   dropdownMenu: {
     position: 'absolute',
-    top: '10%',
+    top: '38%',
     right: 0,
     backgroundColor: '#fff',
     borderRadius: 5,
@@ -32,13 +29,13 @@ const styles = StyleSheet.create({
   },
   menuItem: {
     paddingVertical: 5,
-    paddingHorizontal: 15,
+    paddingHorizontal: 12,
     borderTopWidth: 1, // 드롭다운 메뉴 항목 사이에 구분선 추가
     borderColor: '#ddd', // 드롭다운 메뉴 항목 사이 구분선의 색상 설정
     alignItems: 'center',
   },
   menuItemText: {
-    fontSize: 13,
+    fontSize: 14,
     fontWeight: 'bold',
   },
 });

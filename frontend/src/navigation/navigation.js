@@ -14,6 +14,8 @@ import  DictionaryPage from '../pages/Dictionary/DictionaryPage';
 import MyPage from "../pages/MyPage/MyPage";
 import BottomNav from '../components/BottomNav';
 
+import CustomHeader from "../components/CustomHeader";
+
 // page names for bottomTabs
 const homeName = 'HomePage';
 const contactName = 'ContactPage';
@@ -27,6 +29,9 @@ const Tab = createBottomTabNavigator();
 function MyTabs() {
   return (
     <Tab.Navigator
+      screenOptions={{
+        tabBarStyle: { position: 'absolute' },
+      }}  
       initialRouteName={homeName} 
       tabBar={(props) => <BottomNav {...props} />}
        // BottomNav 컴포넌트를 tabBar로 지정
@@ -47,9 +52,14 @@ const Navigation = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="Login" component={LoginPage} />
-        <Stack.Screen name="Signup" component={SignupPage} />
-        <Stack.Screen name="Main" component={MyTabs} />
+        <Stack.Screen name="Login" options={{headerShown: false,}} component={LoginPage} />
+        <Stack.Screen name="Signup" options={{headerShown: false,}}  component={SignupPage} />
+        <Stack.Screen name="Main" options={{
+        header: ({ scene }) => (
+            <CustomHeader  />
+          ),
+        }}
+        component={MyTabs} />
         <Stack.Screen name="HistoryRoom" component={HistoryRoomPage} />
       </Stack.Navigator>
     </NavigationContainer>
