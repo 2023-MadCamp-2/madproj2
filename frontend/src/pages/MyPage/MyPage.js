@@ -107,6 +107,17 @@ const MyPage = ({ navigation }) => {
       require('../../images/profile1.jpeg'),
       require('../../images/profile2.jpeg'),
       require('../../images/profile3.jpeg'),
+      require('../../images/profile5.jpg'),
+      require('../../images/profile6.jpg'),
+      require('../../images/profile7.jpg'),
+      require('../../images/profile8.jpg'),
+      require('../../images/profile9.jpg'),
+      require('../../images/profile10.jpg'),
+      require('../../images/profile11.jpg'),
+      require('../../images/profile12.jpg'),
+      require('../../images/profile13.png'),
+      require('../../images/profile14.jpg'),
+      require('../../images/profile16.png'),
       require('../../images/background1.jpeg')
     ];
     const image = images[Math.floor(Math.random() * images.length)];
