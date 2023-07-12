@@ -80,7 +80,7 @@ const HistoryRoomPage = ({ route, navigation }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        // backgroundColor: 'white',
+        backgroundColor: '#4E944F',
         width: '100%',
         alignItems: 'center',
     },
@@ -102,6 +102,7 @@ const styles = StyleSheet.create({
         shadowOpacity: .3,
         shadowRadius: 3,
         elevation: 3,
+        marginTop: '30%'
     },
     headerLeft: {
         flexDirection: 'row',
@@ -114,7 +115,7 @@ const styles = StyleSheet.create({
     },
     contentContainer: {
         flex: 1,
-        marginTop: 20,
+        marginTop: '5%',
         width: '100%',
         shadowColor: '#000',
         shadowOffset: {
@@ -163,18 +164,17 @@ const styles = StyleSheet.create({
         borderRadius: 20,
     },
     myMessage: {
-        backgroundColor: '#ffe6e6',
+        backgroundColor: '#ffcccc',
         alignSelf: 'flex-end',
         borderWidth: 3,
         borderColor: '#ffcccc',
         borderTopRightRadius: 0,
     },
     otherMessage: {
-        backgroundColor: '#f0f0f0',
+        backgroundColor: '#f0d586',
         alignSelf: 'flex-start',
         borderWidth: 3,
-        // borderColor: '#b3daff',
-        borderColor: '#e6e6e6',
+        borderColor: '#f0d586',
         borderTopLeftRadius: 0,
     },
     messageText: {

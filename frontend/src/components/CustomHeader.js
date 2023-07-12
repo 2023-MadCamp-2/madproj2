@@ -4,34 +4,40 @@ import { useFonts, BlackHanSans_400Regular } from '@expo-google-fonts/black-han-
 import { DoHyeon_400Regular } from '@expo-google-fonts/do-hyeon';
 
 const CustomHeader = () => {
-    const [fontsLoaded] = useFonts({
-        'BlackHanSans': BlackHanSans_400Regular,
-        'DoHyeon': DoHyeon_400Regular,
-    });
+  const [fontsLoaded] = useFonts({
+    'BlackHanSans': BlackHanSans_400Regular,
+    'DoHyeon': DoHyeon_400Regular,
+  });
 
-    if (!fontsLoaded) {
-        return null;
-    }
+  if (!fontsLoaded) {
+    return null;
+  }
 
-    return (
-        <View style={styles.container}>
-            <Text style={styles.title}>응답하라 삐삐</Text>
-        </View>
-    );
+  return (
+    <View style={styles.container}>
+      <View style={[styles.section, styles.redSection]} />
+      <View style={[styles.section, styles.orangeSection]} />
+      <View style={[styles.section, styles.yellowSection]} />
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({
   container: {
-    height: 80,
-    alignItems: 'flex-start',
-    justifyContent: 'center',
-    backgroundColor: '#f8f8f8',
+    height: 100,
+    flexDirection: 'row',
   },
-  title: {
-    fontSize: 22,
-    fontWeight: 'bold',
-    fontFamily: 'BlackHanSans',
-    margin: 25,
+  section: {
+    flex: 1,
+  },
+  redSection: {
+    backgroundColor: 'red',
+  },
+  orangeSection: {
+    backgroundColor: 'orange',
+  },
+  yellowSection: {
+    backgroundColor: 'yellow',
   },
 });
 

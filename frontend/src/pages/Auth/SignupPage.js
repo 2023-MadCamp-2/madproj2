@@ -127,7 +127,7 @@ const SignupPage = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={{ ...styles.title, marginTop:'40%' }}>회원가입</Text>
+      <Text style={{...styles.title, marginTop: '30%', paddingTop: '25%', borderTopLeftRadius: 30, borderTopRightRadius: 30}}>회원가입</Text>
 
       <View style={styles.form}>
         <TextInput
@@ -168,7 +168,7 @@ const SignupPage = ({ navigation }) => {
       </View>
       <View style={styles.button}>
         <TouchableOpacity onPress={handleSignup}>
-            <Text style={{ ...styles.Btn, backgroundColor: isFormComplete ? 'black' : 'white', color: isFormComplete ? 'white' : 'black' }}>
+            <Text style={{ ...styles.Btn, backgroundColor: isFormComplete ? '#F2BE22' : '#fae100' , color: isFormComplete ? 'white' : 'black'}}>
                 회원가입
             </Text>
         </TouchableOpacity>
@@ -186,15 +186,19 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    backgroundColor: 'white',
   },
   title: {
     fontSize: 60,
     fontWeight: '600',
     fontFamily: 'BlackHanSans',
+    backgroundColor: '#fff',
+    width: '85%',
+    textAlign: 'center',
   },
   form: {
-    width: '80%',
+    width: '85%',
+    backgroundColor: '#fff',
+    paddingHorizontal: 30,
   },
   inputContainer: {
     position: 'relative',
@@ -206,7 +210,7 @@ const styles = StyleSheet.create({
     transform: [{ translateY: -10 }],
     paddingHorizontal: 12,
     paddingVertical: 10,
-    backgroundColor: 'black',
+    backgroundColor:'#F24C3D',
     borderRadius: 20,
   },
   input: {
@@ -219,9 +223,13 @@ const styles = StyleSheet.create({
     color: 'black',
   },
   button: {
-    width: '80%',
+    width: '85%',
     alignItems: 'center',
-    marginTop: 30,
+    paddingVertical: 30,
+    paddingBottom: 80,
+    backgroundColor: '#fff',
+    borderBottomLeftRadius: 30, 
+    borderBottomRightRadius: 30
   },
   Btn: {
     fontSize: 16,
@@ -231,7 +239,6 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     textAlign: 'center',
     borderRadius: 10,
-    borderWidth: 1,
     fontFamily: 'DoHyeon',
   },
 });

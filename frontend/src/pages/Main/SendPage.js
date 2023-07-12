@@ -162,13 +162,13 @@ const SendPage = ({ navigation, route }) => {
           <Text style={styles.buttonText}>0</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={{...styles.button, backgroundColor: '#ffcccc', opacity: message ? 1 : 0.5}}
+          style={{...styles.button, backgroundColor: '#F24C3D', opacity: message ? 1 : 0.5}}
           onPress={handleCancelPress}
         >
           <Text style={{...styles.buttonText, color: '#fff'}}>C</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={{...styles.button, backgroundColor: 'orange', opacity: message ? 1 : 0.5}}
+          style={{...styles.button, backgroundColor: '#F2BE22', opacity: message ? 1 : 0.5}}
           onPress={handleSendPress}
         >
           <Text style={{...styles.buttonText, color: '#fff'}}>전송</Text>
@@ -183,7 +183,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'white',
+    backgroundColor: '#fff',
     marginBottom: 100,
   },
   inputContainer: {

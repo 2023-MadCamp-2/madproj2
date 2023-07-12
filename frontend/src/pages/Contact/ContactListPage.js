@@ -284,11 +284,11 @@ const ContactListPage = ({navigation}) => {
           </TouchableOpacity>
         </View>
       </Modal>
-      <CustomAlert 
+        <CustomAlert 
             isVisible={isVisibleAlert} 
             message={alertMessage} 
             onClose={() => setIsVisibleAlert(false)} 
-      />
+          />
     </View>
   );
 }
@@ -389,7 +389,7 @@ const styles = StyleSheet.create({
       marginBottom: 10,
     },
     modalButton: {
-      backgroundColor: 'black',
+      backgroundColor: "#2196F3",
       paddingVertical: 10,
       paddingHorizontal: 20,
       borderRadius: 5,
@@ -405,7 +405,7 @@ const styles = StyleSheet.create({
       position: 'absolute',
       bottom: 20,
       right: 20,
-      backgroundColor: 'black',
+      backgroundColor: '#4E944F',
       width: 60,
       height: 60,
       borderRadius: 30,

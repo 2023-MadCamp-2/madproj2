@@ -43,6 +43,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#fff',
+        marginTop: 70
     },
     pagerContainer: {
         width: '70%',

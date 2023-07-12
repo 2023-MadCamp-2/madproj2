@@ -133,18 +133,18 @@ const styles = StyleSheet.create({
   },
   listContainer: {
     paddingTop: 30,
-    width: '90%',
+    width: '80%',
   },
   listContent: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'center',
+    justifyContent: 'space-around',
   },
   card: {
     borderRadius: 20,
     overflow: 'hidden',
     marginBottom: 10,
-    alignItems:'center',
+    alignItems:'stretch',
     borderWidth:1,
     borderColor:'#ddd',
     marginHorizontal: 9,
@@ -171,23 +171,23 @@ const styles = StyleSheet.create({
   },
   lastMessage:{
        color:'white',
-       fontSize:15,
+       fontSize: 22,
        fontFamily:'DoHyeon'
   },
   cardBottom:{
       backgroundColor:'white',
       paddingVertical:10,
-      paddingHorizontal:10,
+      paddingHorizontal:20,
       borderBottomLeftRadius:20,
       borderBottomRightRadius:20
   },
   nickname:{
-    fontSize:17,
+    fontSize:16,
     fontWeight:'bold',
     fontFamily:'DoHyeon'
  },
   name: {
-    fontSize: 15,
+    fontSize: 14,
     color: '#888',
     fontFamily: 'DoHyeon',  
   },
