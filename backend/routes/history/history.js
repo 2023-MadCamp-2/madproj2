@@ -19,16 +19,50 @@ async function connectMongoDB() {
 
 connectMongoDB();
 
-// 메시지 전송 라우트
-router.post('/send', async (req, res) => {
-  try {
-    const { from, to, message } = req.body;
-    // 메시지 생성
-    const newMessage = { from, to, message, date: new Date() };
-    await client.db().collection('messages').insertOne(newMessage);
-    res.status(201).json({ message: 'Message sent' });
-  } catch (error) {
-    console.error('Message send 에러:', error);
-    res.status(500).json({ message: 'Error occurred during message send' });
-  }
+
+
+router.get('/:nickname', async (req, res) => {
+    const nickname = req.params.nickname;
+
+    try {
+
+        // 검증 
+        const nickname_valid = await client.db().collection('users').findOne({nickname : nickname})
+        if(!nickname_valid){
+            return res.status(401).json({ message: 'Invalid users' });
+        }
+        ///    
+    
+        const messages = await client.db().collection('messages').find({
+            $or: [
+                { from: nickname },
+                { to: nickname }
+            ]
+        }).sort({timestamp: -1}).toArray();
+
+        let users = new Set();
+        messages.forEach(message => {
+            if(message.from === nickname) {
+                users.add(message.to);
+            } else {
+                users.add(message.from);
+            }
+        });
+
+        let result = [];
+        users.forEach(user => {
+            let lastMessage = messages.find(m => m.from === user || m.to === user);
+            result.push({user: user, lastMessage: lastMessage});
+        });
+
+        res.json(result);
+
+    } catch (error) {
+        //console.error(error);
+        res.status(500).json({ error: 'An error occurred while retrieving the chat history.' });
+    }
 });
+
+
+
+module.exports = router;
