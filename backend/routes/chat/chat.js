@@ -19,6 +19,9 @@ async function connectMongoDB() {
 
 connectMongoDB();
 
+// chat.js
+const axios = require('axios');
+
 // 메시지 전송 라우트
 router.post('/send', async (req, res) => {
   try {
@@ -26,12 +29,32 @@ router.post('/send', async (req, res) => {
     // 메시지 생성
     const newMessage = { from, to, message, date: new Date() };
     await client.db().collection('messages').insertOne(newMessage);
+    
+    // 수신자의 푸시 토큰 찾기
+    const recipient = await client.db().collection('users').findOne({ nickname: to });
+    if (!recipient || !recipient.token) {
+      throw new Error(`No push token found for user: ${to}`);
+    }
+
+    // 알림 발송
+    const response = await axios.post('https://exp.host/--/api/v2/push/send', {
+      to: recipient.token,
+      sound: 'default',
+      title: '삐삐',
+      body: `${from} 79가 ${message} 보냄 8282 확인부탁!`,
+      data: { from, message },
+    });
+
+    if (response.status !== 200) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
     res.status(201).json({ message: 'Message sent' });
   } catch (error) {
     console.error('Message send 에러:', error);
     res.status(500).json({ message: 'Error occurred during message send' });
   }
 });
+
 
 // 메시지 받기 라우트
 router.get('/receive/:nickname', async (req, res) => {
