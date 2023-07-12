@@ -1,33 +1,53 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity } from 'react-native';
 import { useFonts, BlackHanSans_400Regular } from '@expo-google-fonts/black-han-sans';
 import { DoHyeon_400Regular } from '@expo-google-fonts/do-hyeon';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { API_URL } from '@env';
 
 const HistoryRoomPage = ({ route, navigation }) => {
     const { chat } = route.params;
 
-    // 더미 채팅 데이터
-    const messages = [
-        { id: 1, sender: 'me', text: '045' },
-        { id: 2, sender: chat.nickname, text: '04041004' },
-        { id: 3, sender: 'me', text: '129129' },
-        { id: 4, sender: chat.nickname, text: '9090' },
-        { id: 5, sender: 'me', text: '045' },
-        { id: 6, sender: chat.nickname, text: '04041004' },
-        { id: 7, sender: 'me', text: '129129' },
-        { id: 8, sender: chat.nickname, text: '121212' },
-        { id: 9, sender: chat.nickname, text: '9090' },
-        { id: 10, sender: chat.nickname, text: '121212' },
-        { id: 11, sender: chat.nickname, text: '9090' },
-        { id: 12, sender: 'me', text: '121212' },
-        // ... 나머지 채팅
-    ];
+    // // 더미 채팅 데이터
+    // const messages = [
+    //     { id: 1, sender: 'me', text: '045' },
+    //     { id: 2, sender: chat.nickname, text: '04041004' },
+    //     { id: 3, sender: 'me', text: '129129' },
+    //     { id: 4, sender: chat.nickname, text: '9090' },
+    //     { id: 5, sender: 'me', text: '045' },
+    //     { id: 6, sender: chat.nickname, text: '04041004' },
+    //     { id: 7, sender: 'me', text: '129129' },
+    //     { id: 8, sender: chat.nickname, text: '121212' },
+    //     { id: 9, sender: chat.nickname, text: '9090' },
+    //     { id: 10, sender: chat.nickname, text: '121212' },
+    //     { id: 11, sender: chat.nickname, text: '9090' },
+    //     { id: 12, sender: 'me', text: '121212' },
+    //     // ... 나머지 채팅
+    // ];
 
     const [fontsLoaded] = useFonts({
         DoHyeon_400Regular,
         BlackHanSans_400Regular,
     });
+
+    const [messages, setMessages] = useState([]);
+    useEffect(() => {
+      AsyncStorage.getItem('myNickname')
+        .then(myNickname => {
+            console.log(myNickname);
+        fetch(`${API_URL}/chat?from=${myNickname}&to=${chat.nickname}`)
+            .then(response => response.json())
+            .then(data => {
+            const messages = data.map(item => ({
+                id: item._id,
+                sender: item.from === myNickname ? 'me' : chat.nickname,
+                text: item.message
+            }));
+            setMessages(messages);
+            });
+        });
+    }, []);
 
     if (!fontsLoaded) {
         return null;

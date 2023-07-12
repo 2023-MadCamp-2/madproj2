@@ -123,7 +123,7 @@ const LoginPage = ({ navigation }) => {
         // 기존 사용자 데이터가 있는 경우
         console.log('기존 사용자 데이터 있음');
 
-        AsyncStorage.setItem('myNickname', userData.nickname);
+        AsyncStorage.setItem('myNickname', nickname);
         
         // 로그인 성공 후 알림 토큰 받아오기
         const token = await Notifications.getExpoPushTokenAsync();
@@ -133,7 +133,7 @@ const LoginPage = ({ navigation }) => {
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ token: token.data, nickname: userData.nickname }),
+          body: JSON.stringify({ token: token.data, nickname: nickname }),
         });
         console.log('Token update response:', await tokenUpdateResponse.json());
 
@@ -173,12 +173,12 @@ const LoginPage = ({ navigation }) => {
             headers: {
               'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ token: token.data, nickname: userData.nickname }),
+            body: JSON.stringify({ token: token.data, nickname: nickname }),
           });
           console.log('Token update response:', await tokenUpdateResponse.json());
 
           // 로그인 성공 후 다음 화면으로 이동
-          navigation.navigate('Main', { screen: 'Contact' });
+          navigation.navigate('Main', { screen: 'Send' });
         } else {
           // 회원가입 실패 시 처리할 로직 작성
           console.log('회원가입 실패');
