@@ -147,7 +147,8 @@ const DictionaryPage = ({ navigation }) => {
               <TouchableOpacity
                 style={{
                   ...styles.tag,
-                  backgroundColor: selectedTag === item.name ? '#000' : '#fff',
+                  backgroundColor: selectedTag === item.name ? 'green' : '#fff',
+                  borderColor: selectedTag === item.name ? 'green' : '#888',
                   height: selectedTag === item.name ? 80 : 70,
                 }}
                 onPress={() => setSelectedTag(item.name)}
@@ -240,10 +241,9 @@ const styles = StyleSheet.create({
   tag: {
     borderRadius: 20,
     borderWidth: 1,
-    borderColor: '#000',
     marginRight: 10,
     height: 60,
-    paddingHorizontal: 13,
+    paddingHorizontal: 14,
     paddingVertical: 4,
     justifyContent: 'center',
   },

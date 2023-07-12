@@ -9,23 +9,6 @@ import { API_URL } from '@env';
 const HistoryRoomPage = ({ route, navigation }) => {
     const { chat } = route.params;
 
-    // // 더미 채팅 데이터
-    // const messages = [
-    //     { id: 1, sender: 'me', text: '045' },
-    //     { id: 2, sender: chat.nickname, text: '04041004' },
-    //     { id: 3, sender: 'me', text: '129129' },
-    //     { id: 4, sender: chat.nickname, text: '9090' },
-    //     { id: 5, sender: 'me', text: '045' },
-    //     { id: 6, sender: chat.nickname, text: '04041004' },
-    //     { id: 7, sender: 'me', text: '129129' },
-    //     { id: 8, sender: chat.nickname, text: '121212' },
-    //     { id: 9, sender: chat.nickname, text: '9090' },
-    //     { id: 10, sender: chat.nickname, text: '121212' },
-    //     { id: 11, sender: chat.nickname, text: '9090' },
-    //     { id: 12, sender: 'me', text: '121212' },
-    //     // ... 나머지 채팅
-    // ];
-
     const [fontsLoaded] = useFonts({
         DoHyeon_400Regular,
         BlackHanSans_400Regular,
@@ -97,7 +80,7 @@ const HistoryRoomPage = ({ route, navigation }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        // backgroundColor: 'white',
+        backgroundColor: '#4E944F',
         width: '100%',
         alignItems: 'center',
     },
@@ -119,6 +102,7 @@ const styles = StyleSheet.create({
         shadowOpacity: .3,
         shadowRadius: 3,
         elevation: 3,
+        marginTop: '30%'
     },
     headerLeft: {
         flexDirection: 'row',
@@ -131,7 +115,7 @@ const styles = StyleSheet.create({
     },
     contentContainer: {
         flex: 1,
-        marginTop: 20,
+        marginTop: '5%',
         width: '100%',
         shadowColor: '#000',
         shadowOffset: {
@@ -180,18 +164,17 @@ const styles = StyleSheet.create({
         borderRadius: 20,
     },
     myMessage: {
-        backgroundColor: '#ffe6e6',
+        backgroundColor: '#ffcccc',
         alignSelf: 'flex-end',
         borderWidth: 3,
         borderColor: '#ffcccc',
         borderTopRightRadius: 0,
     },
     otherMessage: {
-        backgroundColor: '#f0f0f0',
+        backgroundColor: '#f0d586',
         alignSelf: 'flex-start',
         borderWidth: 3,
-        // borderColor: '#b3daff',
-        borderColor: '#e6e6e6',
+        borderColor: '#f0d586',
         borderTopLeftRadius: 0,
     },
     messageText: {

@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   activeTab: {
-    backgroundColor: '#a3f7ad',
+    backgroundColor: '#62b5f7',
     borderRadius: 20,
     padding: 5,
   },

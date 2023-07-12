@@ -9,6 +9,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { API_URL, REST_API_KEY } from '@env';
 import * as Notifications from 'expo-notifications';
 import { Ionicons } from '@expo/vector-icons';
+import CustomAlert from '../../components/CustomAlert';
 
 const LoginPage = ({ navigation }) => { 
 
@@ -26,6 +27,9 @@ const LoginPage = ({ navigation }) => {
 
   const [nickname, setNickname] = useState("");
   const [password, setPassword] = useState("");
+
+  const [isVisibleAlert, setIsVisibleAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState('');
 
   const onChangeId = (payload) => setNickname(payload);
   const onChangePW = (payload) => setPassword(payload);
@@ -67,7 +71,8 @@ const LoginPage = ({ navigation }) => {
         navigation.navigate('Main', { screen: 'Send' });
       } else {
         // 로그인 실패 시 처리할 로직 작성
-        console.log('로그인 실패');
+        setAlertMessage('로그인 실패');
+        setIsVisibleAlert(true);
         const errorData = await response.json();
         console.log('에러 메시지:', errorData.message);
       }
@@ -192,13 +197,14 @@ const LoginPage = ({ navigation }) => {
     }
   };
   
+    
   if (!fontsLoaded) {
     return null; // 폰트 로딩 중에는 컴포넌트를 렌더링하지 않습니다.
   }
 
   return(
       <View style={styles.container}>
-          <Text style={{...styles.title, marginTop: '40%'}}>응답하라</Text>
+          <Text style={{...styles.title, marginTop: '30%', paddingTop: '25%', borderTopLeftRadius: 30, borderTopRightRadius: 30}}>응답하라</Text>
           <Text style={styles.title}>삐삐</Text>
 
           <View style={styles.form}>
@@ -220,10 +226,10 @@ const LoginPage = ({ navigation }) => {
           </View>
           <View style={styles.button}>
               <TouchableOpacity onPress={handleLogin}>
-                  <Text style={{...styles.Btn, backgroundColor:'white'}}>로그인</Text>
+                  <Text style={{...styles.Btn, backgroundColor:'#F24C3D'}}>로그인</Text>
               </TouchableOpacity>
               <TouchableOpacity onPress={() => {navigation.navigate('Signup')}}>          
-                  <Text style={{...styles.Btn, backgroundColor:'black', color:'white'}}>간편 회원가입</Text>
+                  <Text style={{...styles.Btn, backgroundColor:'#F29727'}}>간편 회원가입</Text>
               </TouchableOpacity>
               <TouchableOpacity onPress={handleKakaoLogin}>
               <View style={{...styles.kakaoButton, justifyContent: 'center', borderWidth: 0}}>
@@ -232,23 +238,37 @@ const LoginPage = ({ navigation }) => {
               </View>
             </TouchableOpacity>
           </View>
+          <CustomAlert 
+            isVisible={isVisibleAlert} 
+            message={alertMessage} 
+            onClose={() => setIsVisibleAlert(false)} 
+          />
       </View>
   )
 }
 
 const styles = StyleSheet.create({
+  // container: {
+  //     flex: 1,
+  //     alignItems: 'center',
+  //     backgroundColor: '#4E944F',
+  // },
   container: {
-      flex: 1,
-      alignItems: 'center',
-      backgroundColor: 'white',
+    flex: 1,
+    alignItems: 'center',
   },
   title: {
       fontSize: 60,
       fontWeight: '600',
       fontFamily: 'BlackHanSans',
+      backgroundColor: '#fff',
+      width: '85%',
+      textAlign: 'center',
   },
   form: {
-      width: '80%',
+      width: '85%',
+      backgroundColor: '#fff',
+      paddingHorizontal: 30,
   },
   input: {
       fontSize: 15,
@@ -259,9 +279,13 @@ const styles = StyleSheet.create({
       paddingHorizontal: 10,
   },
   button: {
-      width: '80%',
+      width: '85%',
       alignItems: 'center',
-      marginTop: 30,
+      paddingVertical: 30,
+      paddingBottom: 80,
+      backgroundColor: '#fff',
+      borderBottomLeftRadius: 30, 
+      borderBottomRightRadius: 30
   },
   Btn: {
       fontSize: 16,
@@ -271,8 +295,8 @@ const styles = StyleSheet.create({
       paddingVertical: 10,
       textAlign: 'center',
       borderRadius: 10,
-      borderWidth:1,
       fontFamily: 'DoHyeon',
+      color: 'white',
   },
   kakaoButton: {
     flexDirection: 'row',

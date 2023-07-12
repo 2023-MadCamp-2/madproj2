@@ -8,6 +8,7 @@ import { Ionicons } from '@expo/vector-icons';
 import ContactDropdownMenu from '../../components/ContactDropdownMenu';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { API_URL } from '@env';
+import CustomAlert from '../../components/CustomAlert';
 
 const ContactListPage = ({navigation}) => {
 
@@ -38,6 +39,9 @@ const ContactListPage = ({navigation}) => {
   const [myName, setMyname] = useState('');
 
   const [isLoading, setIsLoading] = useState(true);
+
+  const [isVisibleAlert, setIsVisibleAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState('');
 
   const getData = async () => {
     const value = await AsyncStorage.getItem('myNickname');
@@ -71,6 +75,17 @@ const ContactListPage = ({navigation}) => {
             require('../../images/profile1.jpeg'),
             require('../../images/profile2.jpeg'),
             require('../../images/profile3.jpeg'),
+            require('../../images/profile5.jpg'),
+            require('../../images/profile6.jpg'),
+            require('../../images/profile7.jpg'),
+            require('../../images/profile8.jpg'),
+            require('../../images/profile9.jpg'),
+            require('../../images/profile10.jpg'),
+            require('../../images/profile11.jpg'),
+            require('../../images/profile12.jpg'),
+            require('../../images/profile13.png'),
+            require('../../images/profile14.jpg'),
+            require('../../images/profile16.png'),
             require('../../images/background1.jpeg')
           ];
           // 랜덤 이미지를 할당하고, Redux 스토어에 저장
@@ -112,7 +127,8 @@ const ContactListPage = ({navigation}) => {
 
   const handleAddContact = async () => {
       if (name.trim() === '' || nickname.trim() === '') {
-        alert('이름과 별명은 필수 입력 사항입니다.');
+        setAlertMessage('이름과 별명은 필수 입력 사항입니다.');
+        setIsVisibleAlert(true);
         return;
       }
       try {
@@ -135,7 +151,7 @@ const ContactListPage = ({navigation}) => {
 
             fetchContacts();
         } else {
-            console.log('친구 추가 실패');
+            alert('친구 추가 실패: 존재하지 않는 유저입니다');
         }
       } catch (error) {
             console.error('친구 추가 에러:', error);
@@ -156,7 +172,7 @@ const ContactListPage = ({navigation}) => {
 
         fetchContacts();
       } else {
-        console.log('친구 삭제 실패');
+        alert('친구 삭제 실패');
       }
     } catch (error) {
       console.error('친구 삭제 에러:', error);
@@ -268,6 +284,11 @@ const ContactListPage = ({navigation}) => {
           </TouchableOpacity>
         </View>
       </Modal>
+        <CustomAlert 
+            isVisible={isVisibleAlert} 
+            message={alertMessage} 
+            onClose={() => setIsVisibleAlert(false)} 
+          />
     </View>
   );
 }
@@ -368,7 +389,7 @@ const styles = StyleSheet.create({
       marginBottom: 10,
     },
     modalButton: {
-      backgroundColor: 'black',
+      backgroundColor: "#2196F3",
       paddingVertical: 10,
       paddingHorizontal: 20,
       borderRadius: 5,
@@ -384,7 +405,7 @@ const styles = StyleSheet.create({
       position: 'absolute',
       bottom: 20,
       right: 20,
-      backgroundColor: 'black',
+      backgroundColor: '#4E944F',
       width: 60,
       height: 60,
       borderRadius: 30,

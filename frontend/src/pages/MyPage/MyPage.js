@@ -40,7 +40,7 @@ const MyPage = ({ navigation }) => {
     nickname: '',
     name: '',
     profileImage: null,
-    backgroundImage: require('../../images/background1.jpeg'),
+    backgroundImage: require('../../images/background3.png'),
   });
   
   useEffect(() => {
@@ -76,10 +76,22 @@ const MyPage = ({ navigation }) => {
   useEffect(() => {
     if (!user.profileImage) {
       // 이미지가 null인 경우에만 랜덤 이미지를 할당
+     
       const images = [
         require('../../images/profile1.jpeg'),
         require('../../images/profile2.jpeg'),
         require('../../images/profile3.jpeg'),
+        require('../../images/profile5.jpg'),
+        require('../../images/profile6.jpg'),
+        require('../../images/profile7.jpg'),
+        require('../../images/profile8.jpg'),
+        require('../../images/profile9.jpg'),
+        require('../../images/profile10.jpg'),
+        require('../../images/profile11.jpg'),
+        require('../../images/profile12.jpg'),
+        require('../../images/profile13.png'),
+        require('../../images/profile14.jpg'),
+        require('../../images/profile16.png'),
         require('../../images/background1.jpeg')
       ];
       // 랜덤 이미지를 할당하고, Redux 스토어에 저장
@@ -133,7 +145,7 @@ const styles = StyleSheet.create({
   },
   backgroundImage: {
     width: '100%',
-    height: '40%',
+    height: '45%',
   },
   profileSection: {
     alignItems: 'center',
@@ -141,11 +153,11 @@ const styles = StyleSheet.create({
     marginTop: -110,
   },
   profileImage: {
-    width: 180,
-    height: 180,
+    width: 200,
+    height: 200,
     borderRadius: 90,
     borderWidth: 5,
-    borderColor: 'white',
+    borderColor: '#fff',
   },
   saveButtonText : {
     color: '#318bfb',

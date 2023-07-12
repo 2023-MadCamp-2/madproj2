@@ -60,7 +60,7 @@ const Navigation = () => {
           ),
         }}
         component={MyTabs} />
-        <Stack.Screen name="HistoryRoom" component={HistoryRoomPage} />
+        <Stack.Screen name="HistoryRoom" options={{headerShown: false,}} component={HistoryRoomPage} />
       </Stack.Navigator>
     </NavigationContainer>
   );
